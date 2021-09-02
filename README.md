@@ -1,0 +1,32 @@
+```bash
+composer create-project --prefer-dist laravel/laravel job
+cd job
+```
+### .gitignore
+```
+composer.lock
+package-lock.json
+```
+### .editorconfig
+```
+end_of_line = crlf
+indent_size = 2
+```
+## MySql
+> - create laravel_job db
+### .env
+```
+APP_NAME="Laravel Job"
+DB_DATABASE=laravel_job
+APP_URL=https://laravel.test.com
+```
+```bash
+npm install && npm run dev
+php artisan migrate:fresh
+git init
+git add .
+git commit -am "Initial Commit - Laravel Framework Installed"
+git remote add origin https://github.com/ZdravekSprite/job.git
+git branch -M main
+git push -u origin main
+```

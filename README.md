@@ -31,11 +31,30 @@ git branch -M main
 git push -u origin main
 ```
 ## Laravel Breeze
-```
+```bash
 composer require laravel/breeze --dev
 php artisan breeze:install
 npm install && npm run dev
 php artisan migrate:fresh
 git add .
 git commit -am "Laravel Breeze Installed"
+git push
+```
+### routes\web.php
+```
+Route::get('/', function () {
+    return view('welcome');
+})->name('home');
+```
+## app\Providers\AppServiceProvider.php
+```php
+use Illuminate\Support\Facades\URL;
+public function boot()
+  {
+    URL::forceScheme('https');
+  }
+```
+```bash
+git commit -am "Laravel Breeze - fix"
+git push
 ```

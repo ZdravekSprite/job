@@ -30,3 +30,12 @@ git remote add origin https://github.com/ZdravekSprite/job.git
 git branch -M main
 git push -u origin main
 ```
+## Laravel Breeze
+```
+composer require laravel/breeze --dev
+php artisan breeze:install
+npm install && npm run dev
+php artisan migrate:fresh
+git add .
+git commit -am "Laravel Breeze Installed"
+```

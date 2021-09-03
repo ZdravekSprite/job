@@ -152,3 +152,29 @@ git add .
 git commit -am "Day 01"
 git push
 ```
+### routes\web.php
+```php
+use App\Http\Controllers\DayController;
+
+Route::resource('days', DayController::class)->middleware(['auth']);
+```
+### app\Http\Controllers\DayController.php
+```php
+use Illuminate\Support\Facades\Auth;
+
+  public function __construct()
+  {
+    $this->middleware('auth');
+  }
+
+  public function index()
+  {
+    $days = Day::orderBy('date','desc')->where('user_id', '=', Auth::user()->id)->get();
+    return view('days.index')->with('days', $days);
+  }
+```
+```bash
+git add .
+git commit -am "Day 02"
+git push
+```

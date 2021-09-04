@@ -18,6 +18,7 @@ class CreateDaysTable extends Migration
       $table->date('date');
       $table->unsignedBigInteger('user_id');
       $table->tinyInteger('state')->default(0);
+      $table->time('night')->default('00:00:00');
       $table->time('start')->default('00:00:00');
       $table->time('end')->default('00:00:00');
       $table->timestamps();

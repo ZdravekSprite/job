@@ -92,6 +92,7 @@ php artisan make:model Day -a
       $table->date('date');
       $table->unsignedBigInteger('user_id');
       $table->tinyInteger('state')->default(0);
+      $table->time('night')->default('00:00:00');
       $table->time('start')->default('00:00:00');
       $table->time('end')->default('00:00:00');
       $table->timestamps();
@@ -136,7 +137,7 @@ php artisan migrate:fresh --seed
   protected $casts = [
     'date' => 'datetime:d.m.Y',
     'start' => 'datetime:H:i',
-    'duration' => 'datetime:H:i',
+    'end' => 'datetime:H:i',
   ];
 
   /**
@@ -176,5 +177,7 @@ use Illuminate\Support\Facades\Auth;
 ```bash
 git add .
 git commit -am "Day 02"
+git add .
+git commit -am "Day 03"
 git push
 ```

@@ -24,4 +24,11 @@ Route::get('/dashboard', function () {
 
 require __DIR__ . '/auth.php';
 
-Route::resource('days', DayController::class)->middleware(['auth']);
+//Route::resource('days', DayController::class)->middleware(['auth']);
+Route::get('/days', [DayController::class, 'index'])->name('days.index');
+Route::get('/day/create', [DayController::class, 'create'])->name('day.create');
+Route::post('/day', [DayController::class, 'store'])->name('day.store');
+Route::get('/day/{date}', [DayController::class, 'show'])->name('day.show');
+Route::get('/day/edit/{date}', [DayController::class, 'edit'])->name('day.edit');
+Route::post('/day/{date}', [DayController::class, 'update'])->name('day.update');
+Route::delete('/day/{date}', [DayController::class, 'destroy'])->name('day.destroy');

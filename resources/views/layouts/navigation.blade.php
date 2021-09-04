@@ -18,7 +18,7 @@
           <x-nav-link :href="route('days.index')" :active="request()->routeIs('days.index')">
             {{ __('Days') }}
           </x-nav-link>
-          <x-nav-link :href="route('days.create')" :active="request()->routeIs('days.create')">
+          <x-nav-link :href="route('day.create')" :active="request()->routeIs('day.create')">
             {{ __('Create day') }}
           </x-nav-link>
         </div>

@@ -24,6 +24,9 @@
           <x-nav-link :href="route('holidays.index')" :active="request()->routeIs('holidays.index')">
             {{ __('Holidays') }}
           </x-nav-link>
+          <x-nav-link :href="route('holidays.create')" :active="request()->routeIs('holidays.create')">
+            {{ __('Create holiday') }}
+          </x-nav-link>
         </div>
       </div>
 

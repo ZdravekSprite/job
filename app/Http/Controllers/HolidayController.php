@@ -70,9 +70,11 @@ class HolidayController extends Controller
    * @param  \App\Models\Holiday  $holiday
    * @return \Illuminate\Http\Response
    */
-  public function edit(Holiday $holiday)
+  //public function edit(Holiday $holiday)
+  public function edit($holiday)
   {
-    //
+    $holiday = Holiday::where('date', '=', date('Y-m-d', strtotime($holiday)))->first();
+    return view('holidays.edit')->with(compact('holiday'));
   }
 
   /**
@@ -82,9 +84,14 @@ class HolidayController extends Controller
    * @param  \App\Models\Holiday  $holiday
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, Holiday $holiday)
+  //public function update(Request $request, Holiday $holiday)
+  public function update(Request $request, $holiday)
   {
-    //
+    $holiday = Holiday::where('date', '=', date('Y-m-d', strtotime($holiday)))->first();
+    $holiday->name = $request->input('name');
+    $holiday->save();
+    //dd($request, $holiday);
+    return view('holidays.show')->with(compact('holiday'));
   }
 
   /**

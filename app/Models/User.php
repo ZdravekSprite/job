@@ -49,4 +49,11 @@ class User extends Authenticatable
   {
     return $this->hasMany(Day::class);
   }
+  /**
+   * Get the users months.
+   */
+  public function months()
+  {
+    return $this->hasMany(Month::class);
+  }
 }

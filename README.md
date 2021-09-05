@@ -77,7 +77,7 @@ ADMIN_NAME=admin
 ADMIN_EMAIL=admin@admin.com
 ADMIN_PASS=password1234
 ```
-## day model (+ migration + controller)
+## day model (+ factory + migration + seeder + controller)
 ```bash
 php artisan make:model Day -a
 ```
@@ -282,5 +282,70 @@ Route::resource('holidays', HolidayController::class);
 ```bash
 git add .
 git commit -am "Holidays 05"
+```
+## month model (+ factory + migration + seeder + controller)
+```bash
+php artisan make:model Month -a
+```
+### database\migrations\2021_09_05_165054_create_months_table.php
+```php
+  public function up()
+  {
+    Schema::create('months', function (Blueprint $table) {
+      $table->id();
+      $table->smallInteger('month');
+      $table->unsignedBigInteger('user_id');
+      $table->mediumInteger('bruto')->nullable();
+      $table->smallInteger('prijevoz')->nullable();
+      $table->mediumInteger('odbitak')->nullable();
+      $table->smallInteger('prirez')->nullable();
+      $table->tinyInteger('prekovremeni')->nullable();
+      $table->mediumInteger('stimulacija')->nullable();
+      $table->mediumInteger('regres')->nullable(); 
+      $table->timestamps();
+      $table->unique(['user_id', 'month']);
+      $table->foreign('user_id')->references('id')->on('users');
+    });
+  }
+```
+```bash
+php artisan migrate
+```
+## Eloquent: Relationships
+
+### app\Models\User.php
+```php
+  /**
+   * Get the users months.
+   */
+  public function months()
+  {
+    return $this->hasMany(Month::class);
+  }
+```
+### app\Models\Month.php
+```php
+  /**
+   * The attributes that should be hidden for arrays.
+   *
+   * @var array
+   */
+  protected $hidden = [
+    'id',
+    'created_at',
+    'updated_at',
+  ];
+
+  /**
+   * Get the user that owns the day.
+   */
+  public function user()
+  {
+    return $this->belongsTo(User::class);
+  }
+```
+```bash
+git add .
+git commit -am "Month 01"
 git push
 ```

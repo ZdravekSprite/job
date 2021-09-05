@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DayController;
+use App\Http\Controllers\HolidayController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,3 +33,5 @@ Route::get('/day/{date}', [DayController::class, 'show'])->name('day.show');
 Route::get('/day/edit/{date}', [DayController::class, 'edit'])->name('day.edit');
 Route::post('/day/{date}', [DayController::class, 'update'])->name('day.update');
 Route::delete('/day/{date}', [DayController::class, 'destroy'])->name('day.destroy');
+
+Route::resource('holidays', HolidayController::class);

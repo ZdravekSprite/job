@@ -21,5 +21,8 @@ class DatabaseSeeder extends Seeder
         'email' => env('ADMIN_EMAIL', 'admin@admin.com'),
         'password' => Hash::make(env('ADMIN_PASS', 'password')),
       ]);
+    $this->call([
+      HolidaySeeder::class,
+    ]);
   }
 }

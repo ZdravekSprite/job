@@ -38,7 +38,6 @@ npm install && npm run dev
 php artisan migrate:fresh
 git add .
 git commit -am "Laravel Breeze Installed"
-git push
 ```
 ### routes\web.php
 ```
@@ -56,7 +55,6 @@ public function boot()
 ```
 ```bash
 git commit -am "Laravel Breeze - fix"
-git push
 ```
 ### database\seeders\DatabaseSeeder.php
 ```php
@@ -151,7 +149,6 @@ php artisan migrate:fresh --seed
 ```bash
 git add .
 git commit -am "Day 01"
-git push
 ```
 ### routes\web.php
 ```php
@@ -177,5 +174,113 @@ use Illuminate\Support\Facades\Auth;
 ```bash
 git add .
 git commit -am "Day 04"
+```
+## holiday model (+ factory + migration + seeder + controller)
+```bash
+php artisan make:model Holiday -a
+```
+### database\migrations\2021_09_05_092658_create_holidays_table.php
+```php
+  public function up()
+  {
+    Schema::create('holidays', function (Blueprint $table) {
+      $table->id();
+      $table->date('date')->unique();
+      $table->string('name');
+      $table->timestamps();
+    });
+  }
+```
+### app\Models\Holiday.php
+```php
+  /**
+   * The attributes that should be hidden for arrays.
+   *
+   * @var array
+   */
+  protected $hidden = [
+    'id',
+    'created_at',
+    'updated_at',
+  ];
+
+  /**
+   * The attributes that should be cast to native types.
+   *
+   * @var array
+   */
+  protected $casts = [
+    'date' => 'datetime:d.m.Y',
+  ];
+```
+### database\seeders\HolidaySeeder.php
+```php
+use App\Models\Holiday;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+
+public function run()
+  {
+    DB::table('holidays')->delete();
+
+    $holidays = [
+      ['date' => date('Y-m-d', strtotime('1.1.2020')), 'name' => 'Nova godina'],
+      ['date' => date('Y-m-d', strtotime('6.1.2020')), 'name' => 'Sveta tri kralja (Bogojavljenje)'],
+      ['date' => date('Y-m-d', strtotime('12.4.2020')), 'name' => 'Uskrs'],
+      ['date' => date('Y-m-d', strtotime('13.4.2020')), 'name' => 'Uskrsni ponedjeljak'],
+      ['date' => date('Y-m-d', strtotime('1.5.2020')), 'name' => 'Praznik rada'],
+      ['date' => date('Y-m-d', strtotime('30.5.2020')), 'name' => 'Dan državnosti'],
+      ['date' => date('Y-m-d', strtotime('11.6.2020')), 'name' => 'Tijelovo'],
+      ['date' => date('Y-m-d', strtotime('22.6.2020')), 'name' => 'Dan antifašističke borbe'],
+      ['date' => date('Y-m-d', strtotime('5.8.2020')), 'name' => 'Dan pobjede i domovinske zahvalnosti i Dan hrvatskih branitelja'],
+      ['date' => date('Y-m-d', strtotime('15.8.2020')), 'name' => 'Velika Gospa'],
+      ['date' => date('Y-m-d', strtotime('1.11.2020')), 'name' => 'Dan svih svetih'],
+      ['date' => date('Y-m-d', strtotime('18.11.2020')), 'name' => 'Dan sjećanja na žrtve Domovinskog rata i Dan sjećanja na žrtvu Vukovara i Škabrnje'],
+      ['date' => date('Y-m-d', strtotime('25.12.2020')), 'name' => 'Božić'],
+      ['date' => date('Y-m-d', strtotime('26.12.2020')), 'name' => 'Sveti Stjepan'],
+      ['date' => date('Y-m-d', strtotime('1.1.2021')), 'name' => 'Nova godina'],
+      ['date' => date('Y-m-d', strtotime('6.1.2021')), 'name' => 'Sveta tri kralja (Bogojavljenje)'],
+      ['date' => date('Y-m-d', strtotime('4.4.2021')), 'name' => 'Uskrs'],
+      ['date' => date('Y-m-d', strtotime('5.4.2021')), 'name' => 'Uskrsni ponedjeljak'],
+      ['date' => date('Y-m-d', strtotime('1.5.2021')), 'name' => 'Praznik rada'],
+      ['date' => date('Y-m-d', strtotime('30.5.2021')), 'name' => 'Dan državnosti'],
+      ['date' => date('Y-m-d', strtotime('3.6.2021')), 'name' => 'Tijelovo'],
+      ['date' => date('Y-m-d', strtotime('22.6.2021')), 'name' => 'Dan antifašističke borbe'],
+      ['date' => date('Y-m-d', strtotime('5.8.2021')), 'name' => 'Dan pobjede i domovinske zahvalnosti i Dan hrvatskih branitelja'],
+      ['date' => date('Y-m-d', strtotime('15.8.2021')), 'name' => 'Velika Gospa'],
+      ['date' => date('Y-m-d', strtotime('1.11.2021')), 'name' => 'Dan svih svetih'],
+      ['date' => date('Y-m-d', strtotime('18.11.2021')), 'name' => 'Dan sjećanja na žrtve Domovinskog rata i Dan sjećanja na žrtvu Vukovara i Škabrnje'],
+      ['date' => date('Y-m-d', strtotime('25.12.2021')), 'name' => 'Božić'],
+      ['date' => date('Y-m-d', strtotime('26.12.2021')), 'name' => 'Sveti Stjepan'],
+    ];
+
+    Holiday::insert($holidays);
+  }
+```
+### database\seeders\DatabaseSeeder.php
+```php
+    $this->call([
+      HolidaySeeder::class,
+    ]);
+```
+```bash
+php artisan migrate:fresh --seed
+```
+### routes\web.php
+```php
+use App\Http\Controllers\HolidayController;
+Route::resource('holidays', HolidayController::class);
+```
+### app\Http\Controllers\HolidayController.php
+```php
+  public function index()
+  {
+    $holidays = Holiday::orderBy('date', 'desc')->get();
+    return view('holidays.index')->with('holidays', $holidays);
+  }
+```
+```bash
+git add .
+git commit -am "Holidays 01"
 git push
 ```

@@ -57,9 +57,11 @@ class HolidayController extends Controller
    * @param  \App\Models\Holiday  $holiday
    * @return \Illuminate\Http\Response
    */
-  public function show(Holiday $holiday)
+  //public function show(Holiday $holiday)
+  public function show($holiday)
   {
-    //
+    $holiday = Holiday::where('date', '=', date('Y-m-d', strtotime($holiday)))->first();
+    return view('holidays.show')->with(compact('holiday'));
   }
 
   /**

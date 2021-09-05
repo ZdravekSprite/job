@@ -12,7 +12,7 @@
           @if(count($holidays) > 0)
           @foreach($holidays as $day)
           <div class="container">
-            {{$day->date->format('d.m.Y')}}
+            <a href="{{ route('holidays.show', ['holiday' => $day->date->format('d.m.Y')]) }}" title="{{$day->name}}">{{$day->date->format('d.m.Y')}}</a>
             {{$day->name}}
             <a class="float-right" style="color:black" href="{{ route('holidays.destroy', ['holiday' => $day->date->format('d.m.Y')]) }}" onclick="event.preventDefault();
     document.getElementById('delete-form-{{ $day->date->format('d.m.Y') }}').submit();" title="Izbriši">

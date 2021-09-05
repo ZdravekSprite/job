@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Day;
+use App\Models\Holiday;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,7 +22,13 @@ class DayController extends Controller
   public function index()
   {
     $days = Day::orderBy('date', 'desc')->where('user_id', '=', Auth::user()->id)->get();
-    //dd($days);
+    $holidays = Holiday::get();
+    foreach ($days as $day) {
+      if ($holidays->where('date', '=', $day->date)->first() != null) {
+        $day->holiday = $holidays->where('date', '=', $day->date)->first()->name;
+      }
+    }
+    //dd($days, $holidays);
     return view('days.index')->with(compact('days'));
   }
 

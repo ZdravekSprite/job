@@ -347,5 +347,30 @@ php artisan migrate
 ```bash
 git add .
 git commit -am "Month 01"
+```
+### routes\web.php
+```php
+use App\Http\Controllers\MonthController;
+
+Route::resource('months', MonthController::class)->middleware(['auth']);
+```
+### app\Http\Controllers\MonthController.php
+```php
+use Illuminate\Support\Facades\Auth;
+
+  public function __construct()
+  {
+    $this->middleware('auth');
+  }
+
+  public function index()
+  {
+    $months = Month::orderBy('month','desc')->where('user_id', '=', Auth::user()->id)->get();
+    return view('months.index')->with('months', $months);
+  }
+```
+```bash
+git add .
+git commit -am "Month 02"
 git push
 ```

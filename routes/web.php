@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DayController;
 use App\Http\Controllers\HolidayController;
+use App\Http\Controllers\MonthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,3 +36,4 @@ Route::post('/day/{date}', [DayController::class, 'update'])->name('day.update')
 Route::delete('/day/{date}', [DayController::class, 'destroy'])->name('day.destroy');
 
 Route::resource('holidays', HolidayController::class);
+Route::resource('months', MonthController::class)->middleware(['auth']);

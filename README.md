@@ -176,8 +176,6 @@ use Illuminate\Support\Facades\Auth;
 ```
 ```bash
 git add .
-git commit -am "Day 02"
-git add .
-git commit -am "Day 03"
+git commit -am "Day 04"
 git push
 ```

@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Day;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -82,7 +79,7 @@ class DayController extends Controller
           $next_day = new Day;
           $next_day->date = $day->date->addDays(1)->format('d.m.Y');
         }
-        $next_day->night = $day->end->format('H:i:s');
+        $next_day->night = $day->end->format('H:i');
         $day->end = "24:00";
         //dd($day,$next_day);
         $next_day->save();
@@ -103,7 +100,13 @@ class DayController extends Controller
   {
     $day = Day::where('user_id', '=', Auth::user()->id)->where('date', '=', date('Y-m-d', strtotime($date)))->first();
     if (!$day) return redirect(route('days.index'))->with('warning', 'Wrong Day');
-    //dd($day);
+    //dd($day->end->format('H:i'));
+    if ($day->end->format('H:i') == "00:00") {
+      $next_day = Day::where('user_id', '=', Auth::user()->id)->where('date', '=', $day->date->addDays(1)->format('Y-m-d'))->first();
+      if ($next_day) {
+        $day->end = $next_day->night->format('H:i');
+      }
+    }
     return view('days.show')->with('day', $day);
   }
 
@@ -141,8 +144,26 @@ class DayController extends Controller
     //dd($request, $date);
     $day = Day::where('user_id', '=', Auth::user()->id)->where('date', '=', date('Y-m-d', strtotime($date)))->first();
     $day->state = $request->input('state') ? $request->input('state') : 0;
-    $day->start = $request->input('start');
-    $day->end = $request->input('end');
+    if ($request->input('state') == 1) {
+      $day->start = $request->input('start');
+      $day->end = $request->input('end');
+      $next_day = Day::where('user_id', '=', Auth::user()->id)->where('date', '=', $day->date->addDays(1)->format('Y-m-d'))->first();
+      if ($day->start > $day->end) {
+        if (!$next_day) {
+          $next_day = new Day;
+          $next_day->date = $day->date->addDays(1)->format('d.m.Y');
+        }
+        $next_day->night = $day->end->format('H:i');
+        $day->end = "24:00";
+        //dd($day,$next_day);
+        $next_day->save();
+      } else {
+        if ($next_day) {
+          $next_day->night = "00:00";
+          $next_day->save();
+        }
+      }
+    }
     //dd($day);
     $day->save();
     return redirect(route('day.show', ['date' => $day->date->format('d.m.Y')]))->with('success', 'Day Updated');
@@ -158,7 +179,20 @@ class DayController extends Controller
   public function destroy($date)
   {
     $day = Day::where('user_id', '=', Auth::user()->id)->where('date', '=', date('Y-m-d', strtotime($date)))->first();
-    $day->delete();
+    //dd($day->night);
+    if ($day->night->format('H:i') == "00:00") {
+      $day->delete();
+    } else {
+      $day->state = 0;
+      $day->start = "00:00";
+      $day->end = "00:00";
+      $day->save();
+    }
+    $next_day = Day::where('user_id', '=', Auth::user()->id)->where('date', '=', $day->date->addDays(1)->format('Y-m-d'))->first();
+    if ($next_day) {
+      $next_day->night = "00:00";
+      $next_day->save();
+    }
     return redirect(route('days.index'))->with('success', 'Day removed');
   }
 }

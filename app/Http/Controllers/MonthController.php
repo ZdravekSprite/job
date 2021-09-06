@@ -51,10 +51,12 @@ class MonthController extends Controller
     $month = new Month;
     $month->month = $request->input('month')-1+$request->input('year')*12;
     $month->user_id = Auth::user()->id;
-    //dd($request,$month);
+    $month->bruto = $request->input('bruto') ? $request->input('bruto') * 100 : null;
+    $old_month = Month::where('user_id', '=', Auth::user()->id)->where('month', '=', $month->month)->first();
+    if ($old_month) return redirect(route('months.edit', ['month' => $month->slug()]))->with('new_month', $month)->with('warning', 'Day already exist');
+    //dd($request,$month,$old_month);
     $month->save();
     return redirect(route('months.show', ['month' => $month->slug()]))->with('success', 'Month Created');
-
   }
 
   /**
@@ -79,9 +81,18 @@ class MonthController extends Controller
    * @param  \App\Models\Month  $month
    * @return \Illuminate\Http\Response
    */
-  public function edit(Month $month)
+  //public function edit(Month $month)
+  public function edit($month)
   {
-    //
+    if (session('new_month')) {
+      $month = session('new_month');
+    } else {
+      $unslug = explode(".", $month)[0] - 1 + explode(".", $month)[1] * 12;
+      $month = Month::where('user_id', '=', Auth::user()->id)->where('month', '=', $unslug)->first();
+    }
+    //dd($month);
+    return view('months.edit')->with(compact('month'));
+
   }
 
   /**
@@ -91,9 +102,16 @@ class MonthController extends Controller
    * @param  \App\Models\Month  $month
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, Month $month)
+  //public function update(Request $request, Month $month)
+  public function update(Request $request,$month)
   {
-    //
+    $this->validate($request, [
+      'month' => 'required',
+    ]);
+    $month = Month::where('user_id', '=', Auth::user()->id)->where('month', '=', $request->input('month'))->first();
+    $month->bruto = $request->input('bruto') ? $request->input('bruto') * 100 : $month->bruto;
+    $month->save();
+    return redirect(route('months.show', ['month' => $month->slug()]))->with('success', 'Month Updated');
   }
 
   /**
@@ -102,8 +120,13 @@ class MonthController extends Controller
    * @param  \App\Models\Month  $month
    * @return \Illuminate\Http\Response
    */
-  public function destroy(Month $month)
+  //public function destroy(Month $month)
+  public function destroy($month)
   {
-    //
+    $unslug = explode(".", $month)[0] - 1 + explode(".", $month)[1] * 12;
+    $month = Month::where('month', '=', $unslug)->first();
+    $month->delete();
+    return redirect(route('months.index'))->with('success', 'Month removed');
+
   }
 }

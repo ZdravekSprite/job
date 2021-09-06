@@ -37,4 +37,13 @@ class Month extends Model
     $y = ($this->month - $this->month % 12) / 12;
     return sprintf("%02d.%04d", $m, $y);
   }
+  /**
+   * Get the last month bruto.
+   */
+  public function last_bruto()
+  {
+    $month = Month::orderBy('month','desc')->where('user_id', '=', $this->user_id)->where('month', '<', $this->month)->where('bruto', '<>', null)->first();
+    if(!$month) $month = $this;
+    return $month->bruto;
+  }
 }

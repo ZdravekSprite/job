@@ -19,22 +19,29 @@
             <!-- month -->
             <div class="mt-4">
               <x-label for="month" :value="__('Mjesec')" />
-              <select class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="month" name="month">
+              <select id="month" name="month" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                 @for($month=1; $month <= 12; $month++)
                   <option value="{{$month}}">{{$month}}</option>
                 @endfor
               </select>
+            </div>
 
             <!-- year -->
             <div class="mt-4">
               <x-label for="year" :value="__('Godina')" />
-              <select class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="year" name="year">
+              <select id="year" name="year" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                 @for($year=2020; $year <= 2022; $year++)
                   <option value="{{$year}}">{{$year}}</option>
                 @endfor
               </select>
-
             </div>
+
+            <!-- bruto -->
+            <div class="mt-4">
+              <x-label for="bruto" :value="__('Bruto')" />
+              <input id="bruto" type="number" name="bruto" value="{{old('bruto')?? 5300}}" min="4250" step="50" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"/>
+            </div>
+
             <div class="flex items-center justify-end mt-4">
               <x-button class="ml-4">
                 {{ __('Spremi') }}

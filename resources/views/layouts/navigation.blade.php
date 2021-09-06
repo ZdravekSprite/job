@@ -30,6 +30,9 @@
           <x-nav-link :href="route('months.index')" :active="request()->routeIs('months.index')">
             {{ __('Months') }}
           </x-nav-link>
+          <x-nav-link :href="route('months.create')" :active="request()->routeIs('months.create')">
+            {{ __('Create month') }}
+          </x-nav-link>
         </div>
       </div>
 

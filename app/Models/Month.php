@@ -15,15 +15,26 @@ class Month extends Model
    */
   protected $hidden = [
     'id',
+    'user_id',
     'created_at',
     'updated_at',
   ];
 
   /**
-   * Get the user that owns the day.
+   * Get the user that owns the month.
    */
   public function user()
   {
     return $this->belongsTo(User::class);
+  }
+
+  /**
+   * Get the month slug.
+   */
+  public function slug()
+  {
+    $m = $this->month % 12 + 1;
+    $y = ($this->month - $this->month % 12) / 12;
+    return sprintf("%02d.%04d", $m, $y);
   }
 }

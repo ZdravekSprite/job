@@ -30,7 +30,10 @@ class MonthController extends Controller
    */
   public function create()
   {
-    //
+    $month = new Month;
+    //dd($day);
+    return view('months.create')->with(compact('month'));
+
   }
 
   /**
@@ -41,7 +44,17 @@ class MonthController extends Controller
    */
   public function store(Request $request)
   {
-    //
+    $this->validate($request, [
+      'month' => 'required',
+      'year' => 'required'
+    ]);
+    $month = new Month;
+    $month->month = $request->input('month')-1+$request->input('year')*12;
+    $month->user_id = Auth::user()->id;
+    //dd($request,$month);
+    $month->save();
+    return redirect(route('months.show', ['month' => $month->slug()]))->with('success', 'Month Created');
+
   }
 
   /**
@@ -50,9 +63,14 @@ class MonthController extends Controller
    * @param  \App\Models\Month  $month
    * @return \Illuminate\Http\Response
    */
-  public function show(Month $month)
+  //public function show(Month $month)
+  public function show($month)
   {
-    //
+    $unslug = explode(".", $month)[0] - 1 + explode(".", $month)[1] * 12;
+    $month = Month::where('user_id', '=', Auth::user()->id)->where('month', '=', $unslug)->first();
+    //dd($month);
+    return view('months.show')->with(compact('month'));
+
   }
 
   /**

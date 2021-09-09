@@ -38,12 +38,12 @@ class Month extends Model
     return sprintf("%02d.%04d", $m, $y);
   }
   /**
-   * Get the last month bruto.
+   * Get the last month for some attributte.
    */
-  public function last_bruto()
+  public function last($att)
   {
-    $month = Month::orderBy('month','desc')->where('user_id', '=', $this->user_id)->where('month', '<', $this->month)->where('bruto', '<>', null)->first();
+    $month = Month::orderBy('month','desc')->where('user_id', '=', $this->user_id)->where('month', '<', $this->month)->where($att, '<>', null)->first();
     if(!$month) $month = $this;
-    return $month->bruto;
+    return $month->attributes[$att];
   }
 }

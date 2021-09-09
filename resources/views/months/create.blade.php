@@ -42,6 +42,12 @@
               <input id="bruto" type="number" name="bruto" value="{{old('bruto')?? 5300}}" min="4250" step="50" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"/>
             </div>
 
+            <!-- prijevoz -->
+            <div class="mt-4">
+              <x-label for="prijevoz" :value="__('Prijevoz')" />
+              <input id="prijevoz" type="number" name="prijevoz" value="{{old('prijevoz')?? 300}}" min="0" step="10" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"/>
+            </div>
+
             <div class="flex items-center justify-end mt-4">
               <x-button class="ml-4">
                 {{ __('Spremi') }}

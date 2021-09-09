@@ -36,6 +36,11 @@
             </div>
 
             <!-- odbitak -->
+            <div class="mt-4">
+              <x-label for="odbitak" :value="__('Odbitak')" />
+              <input id="odbitak" type="number" name="odbitak" value="{{$month->odbitak ? $month->odbitak/100 : old('odbitak')?? 4000}}" min="4000" step="50" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"/>
+            </div>
+
             <!-- prirez -->
             <!-- prekovremeni -->
             <!-- stimulacija -->

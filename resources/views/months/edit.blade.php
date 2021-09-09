@@ -42,6 +42,11 @@
             </div>
 
             <!-- prirez -->
+            <div class="mt-4">
+              <x-label for="prirez" :value="__('Prirez')" />
+              <input id="prirez" type="number" name="prirez" value="{{$month->prirez ? $month->prirez/100 : old('prirez')?? 0}}" min="0" step="0.1" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"/>
+            </div>
+
             <!-- prekovremeni -->
             <!-- stimulacija -->
             <!-- regres -->

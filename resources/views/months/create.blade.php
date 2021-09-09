@@ -54,6 +54,12 @@
               <input id="odbitak" type="number" name="odbitak" value="{{old('odbitak')?? 4000}}" min="4000" step="50" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"/>
             </div>
 
+            <!-- prirez -->
+            <div class="mt-4">
+              <x-label for="prirez" :value="__('Prirez')" />
+              <input id="prirez" type="number" name="prirez" value="{{old('prirez')?? 0}}" min="0" step="0.1" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"/>
+            </div>
+
             <div class="flex items-center justify-end mt-4">
               <x-button class="ml-4">
                 {{ __('Spremi') }}

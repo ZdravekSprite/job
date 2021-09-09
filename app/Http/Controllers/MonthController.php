@@ -54,6 +54,7 @@ class MonthController extends Controller
     $month->bruto = $request->input('bruto') ? $request->input('bruto') * 100 : null;
     $month->prijevoz = $request->input('prijevoz') ? $request->input('prijevoz') * 100 : null;
     $month->odbitak = $request->input('odbitak') ? $request->input('odbitak') * 100 : null;
+    $month->prirez = $request->input('prirez') ? $request->input('prirez') * 100 : null;
     $old_month = Month::where('user_id', '=', Auth::user()->id)->where('month', '=', $month->month)->first();
     if ($old_month) return redirect(route('months.edit', ['month' => $month->slug()]))->with('new_month', $month)->with('warning', 'Day already exist');
     //dd($request,$month,$old_month);
@@ -114,6 +115,7 @@ class MonthController extends Controller
     $month->bruto = $request->input('bruto') ? $request->input('bruto') * 100 : $month->bruto;
     $month->prijevoz = $request->input('prijevoz') ? $request->input('prijevoz') * 100 : $month->prijevoz;
     $month->odbitak = $request->input('odbitak') ? $request->input('odbitak') * 100 : $month->odnitak;
+    $month->prirez = $request->input('prirez') ? $request->input('prirez') * 100 : $month->prirez;
     $month->save();
     return redirect(route('months.show', ['month' => $month->slug()]))->with('success', 'Month Updated');
   }

@@ -73,8 +73,9 @@ class MonthController extends Controller
   {
     $unslug = explode(".", $month)[0] - 1 + explode(".", $month)[1] * 12;
     $month = Month::where('user_id', '=', Auth::user()->id)->where('month', '=', $unslug)->first();
-    //dd($month);
-    return view('months.show')->with(compact('month'));
+    $days = $month->days();
+    //dd($month,$days);
+    return view('months.show')->with(compact('month', 'days'));
 
   }
 

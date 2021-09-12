@@ -50,25 +50,16 @@ class Month extends Model
   }
 
   /**
-   * Get the days month for some attributte.
+   * Get the days of month.
    */
   public function days()
   {
     $firstDate = '01.' . $this->slug();
-    $from = CarbonImmutable::createFromFormat('d.m.Y', $firstDate)
-      ->firstOfMonth();
-    $to = Carbon::createFromFormat('d.m.Y', $firstDate)
-      ->endOfMonth();
-    /*
-    $from = CarbonImmutable::parse($month['x'])->firstOfMonth();
-    $to = Carbon::parse($month['x'])->endOfMonth();
-    */
+    $from = CarbonImmutable::createFromFormat('d.m.Y', $firstDate)->firstOfMonth();
+    $to = Carbon::createFromFormat('d.m.Y', $firstDate)->endOfMonth();
     //dd($firstDate,$from,$to);
-    $daysColection = Day::whereBetween('date', [$from, $to])
-      ->where('user_id', '=', $this->user_id)
-      ->get();
-    $holidaysColection = Holiday::whereBetween('date', [$from, $to])
-      ->get();
+    $daysColection = Day::whereBetween('date', [$from, $to])->where('user_id', '=', $this->user_id)->get();
+    $holidaysColection = Holiday::whereBetween('date', [$from, $to])->get();
     $datesArray = array();
     for ($i = 0; $i < $from->daysInMonth; $i++) {
       if ($daysColection->where('date', '=', $from->addDays($i))->first() != null) {
@@ -88,5 +79,52 @@ class Month extends Model
     $days = $datesArray;
 
     return $days;
+  }
+
+  /**
+   * Get the hours Norm of month.
+   */
+  public function hoursNorm()
+  {
+    $hoursNormAll = 0;
+    $hoursNormGO = 0;
+    $hoursNormDopust = 0;
+    $hoursNormSick = 0;
+    foreach ($this->days() as $d) {
+      $dayOfWeek = $d->date->dayOfWeek;
+      switch ($dayOfWeek) {
+        case 0:
+          $def_h = 0;
+          break;
+        case 6:
+          $def_h = 5;
+          break;
+        default:
+          $def_h = 7;
+          break;
+      }
+      $hoursNormAll += $def_h;
+
+      switch ($d->state) {
+        case 2:
+          $hoursNormGO += $def_h;
+          break;
+        case 3:
+          $hoursNormDopust += $def_h;
+          break;
+        case 4:
+          $hoursNormSick += $def_h;
+          break;
+        default:
+          break;
+      }
+    }
+    $hoursNorm = (object) [
+      'All' => $hoursNormAll,
+      'GO' => $hoursNormGO,
+      'Dopust' => $hoursNormDopust,
+      'Sick' => $hoursNormSick
+    ];
+    return $hoursNorm;
   }
 }

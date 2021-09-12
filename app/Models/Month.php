@@ -87,6 +87,8 @@ class Month extends Model
   public function hoursNorm()
   {
     $hoursNormAll = 0;
+    $hoursNormHoli = 0;
+
     $hoursNormGO = 0;
     $hoursNormDopust = 0;
     $hoursNormSick = 0;
@@ -105,6 +107,10 @@ class Month extends Model
       }
       $hoursNormAll += $def_h;
 
+      if ($d->holiday) {
+        $hoursNormHoli += $def_h;
+      }
+
       switch ($d->state) {
         case 2:
           $hoursNormGO += $def_h;
@@ -121,6 +127,7 @@ class Month extends Model
     }
     $hoursNorm = (object) [
       'All' => $hoursNormAll,
+      'Holiday' => $hoursNormHoli,
       'GO' => $hoursNormGO,
       'Dopust' => $hoursNormDopust,
       'Sick' => $hoursNormSick

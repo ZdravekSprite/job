@@ -20,7 +20,13 @@
             <thead>
               <tr>
                 <th class="w-24"></th>
-                <th>All: {{$month->hoursNorm()->All}} GO: {{$month->hoursNorm()->GO}} Dopust: {{$month->hoursNorm()->Dopust}} Bolovanje: {{$month->hoursNorm()->Sick}}</th>
+                <th>
+                  All: {{$month->hoursNorm()->All}}
+                  Praznik: {{$month->hoursNorm()->Holiday}}
+                  GO: {{$month->hoursNorm()->GO}}
+                  Dopust: {{$month->hoursNorm()->Dopust}}
+                  Bolovanje: {{$month->hoursNorm()->Sick}}
+                </th>
                 <th class="w-32"></th>
               </tr>
             </thead>

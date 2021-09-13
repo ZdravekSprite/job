@@ -21,7 +21,7 @@ class DayController extends Controller
    */
   public function index()
   {
-    $days = Day::orderBy('date', 'desc')->where('user_id', '=', Auth::user()->id)->get();
+    $days = Day::orderBy('date', 'desc')->where('user_id', '=', Auth::user()->id)->paginate(25);
     $holidays = Holiday::get();
     foreach ($days as $day) {
       if ($holidays->where('date', '=', $day->date)->first() != null) {

@@ -50,6 +50,24 @@ class Month extends Model
   }
 
   /**
+   * Get the next month.
+   */
+  public function next()
+  {
+    $next = Month::orderBy('month', 'asc')->where('user_id', '=', $this->user_id)->where('month', '>', $this->month)->first();
+    return $next ? $next->slug() : $this->slug();
+  }
+
+  /**
+   * Get the prev month.
+   */
+  public function prev()
+  {
+    $prev = Month::orderBy('month', 'desc')->where('user_id', '=', $this->user_id)->where('month', '<', $this->month)->first();
+    return $prev ? $prev->slug() : $this->slug();
+  }
+
+  /**
    * Get the days of month.
    */
   public function days()

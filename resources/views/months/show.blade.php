@@ -1,33 +1,45 @@
 <x-app-layout>
   <x-slot name="header">
-    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-      {{ __('Mjesec') }}
+    <h2 class="font-semibold text-xl text-gray-800 leading-tight" title="{{$month->month}}">
+      {{ __('Mjesec') }} {{ $month->slug() }}
     </h2>
+    <div class="px-6">
+      <p>Bruto: {{$month->bruto ? number_format($month->bruto/100, 2, ',', ' ') : number_format($month->last('bruto')/100, 2, ',', ' ')}}</p>
+      <p>Prijevoz: {{$month->prijevoz ? number_format($month->prijevoz/100, 2, ',', ' ') : number_format($month->last('prijevoz')/100, 2, ',', ' ')}}</p>
+      <p>Odbitak: {{$month->odbitak ? number_format($month->odbitak/100, 2, ',', ' ') : number_format($month->last('odbitak')/100, 2, ',', ' ')}}</p>
+      <p>Prirez: {{$month->prirez ? number_format($month->prirez/100, 2, ',', ' ') : number_format($month->last('prirez')/100, 2, ',', ' ')}}</p>
+    </div>
   </x-slot>
 
   <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
       <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
         <div class="p-6 bg-white border-b border-gray-200">
-          <h3 title="{{$month->month}}">Month {{ $month->slug() }}!</h3>
-          <p>Bruto: {{$month->bruto ? number_format($month->bruto/100, 2, ',', ' ') : number_format($month->last('bruto')/100, 2, ',', ' ')}}</p>
-          <p>Prijevoz: {{$month->prijevoz ? number_format($month->prijevoz/100, 2, ',', ' ') : number_format($month->last('prijevoz')/100, 2, ',', ' ')}}</p>
-          <p>Odbitak: {{$month->odbitak ? number_format($month->odbitak/100, 2, ',', ' ') : number_format($month->last('odbitak')/100, 2, ',', ' ')}}</p>
-          <p>Prirez: {{$month->prirez ? number_format($month->prirez/100, 2, ',', ' ') : number_format($month->last('prirez')/100, 2, ',', ' ')}}</p>
-        </div>
-        <div class="p-6 bg-white border-b border-gray-200">
           <table class="table-auto w-full">
             <thead>
               <tr>
-                <th class="w-24"></th>
+                <th class="w-24">
+                  <a href="{{ route('months.show', ['month' => $month->prev()]) }}" title="{{$month->prev()}}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-arrow-left-square" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm11.5 5.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
+                    </svg>
+                  </a>
+                </th>
                 <th>
                   All: {{$month->hoursNorm()->All}}
                   Praznik: {{$month->hoursNorm()->Holiday}}
                   GO: {{$month->hoursNorm()->GO}}
                   Dopust: {{$month->hoursNorm()->Dopust}}
                   Bolovanje: {{$month->hoursNorm()->Sick}}
+                  Satnica: {{$perHour = round((($month->bruto ? $month->bruto/100 : $month->last('bruto')/100) / $month->hoursNorm()->All), 2)}}
                 </th>
-                <th class="w-32"></th>
+                <th class="w-32">
+                  <a class="float-right" href="{{ route('months.show', ['month' => $month->next()]) }}" title="{{$month->next()}}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-arrow-right-square" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm4.5 5.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z" />
+                    </svg>
+                  </a>
+                </th>
               </tr>
             </thead>
             <tbody>

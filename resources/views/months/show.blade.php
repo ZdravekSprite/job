@@ -48,7 +48,7 @@
               <tr>
                 <td><a {{isset($day->holiday) ? 'class=text-red-400 ' : ''}}href="{{ route('day.show', ['date' => $day->date->format('d.m.Y')]) }}" title="{{$day->date->format('d.m.Y')}}{{isset($day->holiday) ? ' '.$day->holiday : ''}}">{{$day->date->format('d.m.Y')}}</a></td>
                 <td>
-                  <div class="w-full rounded-md relative {{$day->state == 4 ? 'bg-red' : ($day->state == 3 ? 'bg-gray' : ($day->state == 2 ? 'bg-green' : ($day->state == 1 ? 'bg-indigo' : 'bg-yellow')))}}-{{$day->date->format('D') == 'Sun' ? '300' : '100'}}" style="min-height: 18px;" title={{$day->date->format('d.m.Y')}}>
+                  <div class="w-full rounded-md relative {{$day->state == 4 ? 'bg-red' : ($day->state == 3 ? 'bg-gray' : ($day->state == 2 ? 'bg-green' : ($day->state == 1 ? 'bg-indigo' : 'bg-yellow')))}}-{{$day->date->format('D') == 'Sun' ? '300' : '100'}}" style="min-height: 18px;" title="{{$day->date->format('d.m.Y')}}{{$day->state == 1 ? ' ' .$day->start->format('H.i').' '.$day->end->format('H.i') : ''}}">
                     @if($day->state == 1)
                     <div class="absolute rounded-l-md bg-indigo-500 min-h-full" style="width: {{isset($day->night) ? ($day->night->hour*60 + $day->night->minute)/1440*100 : 0}}%;"></div>
                     <div class="absolute{{(isset($day->end) && $day->end->format('H:i') == '00:00') ? ' rounded-r-md' : ''}} bg-indigo-500 min-h-full" style="margin-left: {{isset($day->start) ? ($day->start->hour*60 + $day->start->minute)/1440*100 : 0}}%; width: {{isset($day->end) ? ($day->end->diffInMinutes($day->start))/1440*100 : 0}}%;"></div>

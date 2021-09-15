@@ -68,6 +68,26 @@ class Month extends Model
   }
 
   /**
+   * Get the first day of month.
+   */
+  public function from()
+  {
+    $firstDate = '01.' . $this->slug();
+    $from = CarbonImmutable::createFromFormat('d.m.Y', $firstDate)->firstOfMonth();
+    return $from;
+  }
+
+  /**
+   * Get the last day of month.
+   */
+  public function to()
+  {
+    $firstDate = '01.' . $this->slug();
+    $to = Carbon::createFromFormat('d.m.Y', $firstDate)->endOfMonth();
+    return $to;
+  }
+
+  /**
    * Get the days of month.
    */
   public function days()

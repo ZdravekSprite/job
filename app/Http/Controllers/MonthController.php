@@ -71,11 +71,19 @@ class MonthController extends Controller
   //public function show(Month $month)
   public function show($month)
   {
+    $data['III.godina'] = explode(".", $month)[1];
+    $data['III.mjesec'] = explode(".", $month)[0];
     $unslug = explode(".", $month)[0] - 1 + explode(".", $month)[1] * 12;
     $month = Month::where('user_id', '=', Auth::user()->id)->where('month', '=', $unslug)->first();
     $days = $month->days();
+
+    $from = $month->from();
+    $to = $month->to();
+    $data['III.od'] = $from->format('d');
+    $data['III.do'] = $to->format('d');
+
     //dd($month,$days);
-    return view('months.show')->with(compact('month', 'days'));
+    return view('months.show')->with(compact('month', 'days', 'data'));
 
   }
 

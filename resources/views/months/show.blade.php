@@ -90,8 +90,7 @@
                   </a>
                   @endif
 
-                  <a class="float-right" style="color:black" href="{{ route('day.destroy', ['date' => $day->date->format('d.m.Y')]) }}" onclick="event.preventDefault();
-    document.getElementById('delete-form-{{ $day->date->format('d.m.Y') }}').submit();" title="Izbriši">
+                  <a class="float-right" style="color:black" href="{{ route('day.destroy', ['date' => $day->date->format('d.m.Y')]) }}" onclick="event.preventDefault(); document.getElementById('delete-form-{{ $day->date->format('d.m.Y') }}').submit();" title="Izbriši">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                       <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
                       <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
@@ -107,6 +106,63 @@
               @else
               <p> No days found</p>
               @endif
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="py-12">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+      <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+        <div class="p-6 bg-white border-b border-gray-200">
+          <table class="table-fixed">
+            <thead>
+              <tr>
+                <th class="w-1/2 text-left"><b>OBRAČUN ISPLAĆENE PLAĆE</b></th>
+                <th class="w-1/2 text-right" colspan="3"><b>Obrazac IP1</b></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="border p-2">
+                  <ul>
+                    <li><b>I. PODACI O POSLODAVCU</b></li>
+                    <li>1. Tvrtka/ Ime i prezime: ____</li>
+                    <li>2. Sjedište / Adresa: ____</li>
+                    <li>3. Osobni identifikacijski broj: ____</li>
+                    <li>4. IBAN broj računa ____ kod ____</li>
+                  </ul>
+                </td>
+                <td class="border p-2" colspan="3">
+                  <ul>
+                    <li><b>II. PODACI O RADNIKU/RADNICI</b></li>
+                    <li>
+                      1. Ime i prezime: <b>{{ Auth::user()->name }}</b>
+                    </li>
+                    <li>2. Adresa: ____</li>
+                    <li>3. Osobni identifikacijski broj: ____</li>
+                    <li>4. IBAN broj računa ____ kod ____</li>
+                    <li>5. IBAN broj računa iz čl. 212. Ovršnog zakona ____ kod ____</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td class="border p-2" colspan="4"><b>III. RAZDOBLJE NA KOJE SE PLAĆA ODNOSI:</b> GODINA {{ $data['III.godina'] }}, MJESEC
+                  {{ $data['III.mjesec'] }} DANI U MJESECU OD {{ $data['III.od'] }} DO {{ $data['III.do'] }}</td>
+              </tr>
+              <tr>
+                <td class="w-3/4 border p-2" colspan="2"><b>1. OPIS PLAĆE</b></td>
+                <td class="w-1/8 border p-2 text-center"><b>SATI</b></td>
+                <td class="w-1/8 border p-2 text-right"><b>IZNOS</b></td>
+              </tr>
+
+              <tr>
+                <td class="w-3/4 border p-2" colspan="2">2. OSTALI OBLICI RADA TEMELJEM KOJIH OSTVARUJE PRAVO NA UVEĆANJE PLAĆE PREMA KOLEKTIVNOM UGOVORU, PRAVILNIKU O RADU ILI UGOVORU O RADU I NOVČANI IZNOS PO TOJ OSNOVI (SATI PRIPRAVNOSTI)</td>
+                <td class="w-1/8 border p-2 text-center"></td>
+                <td class="w-1/8 border p-2 text-right"></td>
+              </tr>
+
             </tbody>
           </table>
         </div>

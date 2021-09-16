@@ -95,6 +95,14 @@ class MonthController extends Controller
     $data['1.1.h'] = number_format($h1_1, 2, ',', '.');
     $data['1.1.kn'] = number_format($h1_1 * $perHour, 2, ',', '.');
 
+    // 1.4 Za prekovremeni rad
+    $h1_4 = $month->prekovremeni;
+    $overWork = $hoursNorm->min / 60 - $hoursWorkNorm;
+
+    $data['1.4.h'] = number_format($h1_4, 2, ',', '.') . ' (' . number_format($overWork, 2, ',', '.') . ')';
+    $data['1.4.kn'] = number_format($h1_4 * $perHour * 1.5, 2, ',', '.');
+    
+    
     //dd($month,$days);
     return view('months.show')->with(compact('month', 'days', 'data'));
 

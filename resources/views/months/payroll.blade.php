@@ -47,6 +47,11 @@
               <td class="w-1/8 border p-2 text-center">{{ $data['1.1.h'] }}</td>
               <td class="w-1/8 border p-2 text-right">{{ $data['1.1.kn'] }}</td>
             </tr>
+            <tr>
+              <td class="w-3/4 border p-2 pl-6" colspan="2">1.4 Za prekovremeni rad</td>
+              <td class="w-1/8 border p-2 text-center">{{ $data['1.4.h'] }}</td>
+              <td class="w-1/8 border p-2 text-right">{{ $data['1.4.kn'] }}</td>
+            </tr>
 
             <tr>
               <td class="w-3/4 border p-2" colspan="2">2. OSTALI OBLICI RADA TEMELJEM KOJIH OSTVARUJE PRAVO NA UVEĆANJE PLAĆE PREMA KOLEKTIVNOM UGOVORU, PRAVILNIKU O RADU ILI UGOVORU O RADU I NOVČANI IZNOS PO TOJ OSNOVI (SATI PRIPRAVNOSTI)</td>

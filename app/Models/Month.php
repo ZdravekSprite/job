@@ -130,11 +130,21 @@ class Month extends Model
     $hoursNormGO = 0;
     $hoursNormDopust = 0;
     $hoursNormSick = 0;
+
+    $minWork = 0;
+    $minWorkHoli = 0;
+    $minWorkSunday = 0;
+
     foreach ($this->days() as $d) {
+
+      $day_minWork = ($d->start ? ($d->end ? $d->end->diffInMinutes($d->start) : 24*60 - $d->start->format('H') * 60 + $d->start->format('i')) : 0) + ($d->night ? $d->night->format('H') * 60 + $d->night->format('i') : 0);
+      $minWork += $day_minWork;
+
       $dayOfWeek = $d->date->dayOfWeek;
       switch ($dayOfWeek) {
         case 0:
           $def_h = 0;
+          $minWorkSunday += $day_minWork;
           break;
         case 6:
           $def_h = 5;
@@ -147,6 +157,7 @@ class Month extends Model
 
       if ($d->holiday) {
         $hoursNormHoli += $def_h;
+        $minWorkHoli += $day_minWork;
       }
 
       switch ($d->state) {
@@ -163,12 +174,17 @@ class Month extends Model
           break;
       }
     }
+    $hoursNormWork = $hoursNormAll - $hoursNormHoli - $hoursNormGO - $hoursNormDopust - $hoursNormSick;
     $hoursNorm = (object) [
       'All' => $hoursNormAll,
       'Holiday' => $hoursNormHoli,
       'GO' => $hoursNormGO,
       'Dopust' => $hoursNormDopust,
-      'Sick' => $hoursNormSick
+      'Sick' => $hoursNormSick,
+      'Work' => $hoursNormWork,
+      'min' => $minWork,
+      'minSunday' => $minWorkSunday,
+      'minHolday' => $minWorkHoli
     ];
     return $hoursNorm;
   }

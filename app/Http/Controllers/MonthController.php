@@ -73,7 +73,7 @@ class MonthController extends Controller
   {
     $data['III.godina'] = explode(".", $month)[1];
     $data['III.mjesec'] = explode(".", $month)[0];
-    $unslug = explode(".", $month)[0] - 1 + explode(".", $month)[1] * 12;
+    $unslug = $data['III.mjesec'] - 1 + $data['III.godina'] * 12;
     $month = Month::where('user_id', '=', Auth::user()->id)->where('month', '=', $unslug)->first();
     $days = $month->days();
 
@@ -81,6 +81,19 @@ class MonthController extends Controller
     $to = $month->to();
     $data['III.od'] = $from->format('d');
     $data['III.do'] = $to->format('d');
+
+    $hoursNorm = $month->hoursNorm();
+    $bruto = $month->bruto ? $month->bruto : $month->last('bruto');
+    $month->bruto = $bruto;
+    $perHour = round(($bruto/ 100 / $hoursNorm->All), 2);
+    $data['perHour'] = $perHour;
+    $hoursWorkNorm = $hoursNorm->Work;
+    //dd($hoursNorm, $bruto, $perHour);
+
+    // 1.1. Za redoviti rad
+    $h1_1 = $hoursNorm->min / 60 > $hoursWorkNorm ? $hoursWorkNorm : $hoursNorm->min / 60;
+    $data['1.1.h'] = number_format($h1_1, 2, ',', '.');
+    $data['1.1.kn'] = number_format($h1_1 * $perHour, 2, ',', '.');
 
     //dd($month,$days);
     return view('months.show')->with(compact('month', 'days', 'data'));

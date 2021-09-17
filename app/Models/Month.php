@@ -184,7 +184,7 @@ class Month extends Model
       'Work' => $hoursNormWork,
       'min' => $minWork,
       'minSunday' => $minWorkSunday,
-      'minHolday' => $minWorkHoli
+      'minHoliday' => $minWorkHoli
     ];
     return $hoursNorm;
   }

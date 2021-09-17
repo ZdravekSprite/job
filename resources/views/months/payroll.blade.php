@@ -52,6 +52,48 @@
               <td class="w-1/8 border p-2 text-center">{{ $data['1.4.h'] }}</td>
               <td class="w-1/8 border p-2 text-right">{{ $data['1.4.kn'] }}</td>
             </tr>
+            @if($data['1.7a.h'] > 0)
+            <tr>
+              <td class="w-3/4 border p-2 pl-6" colspan="2">1.7a Praznici. Blagdani, izbori</td>
+              <td class="w-1/8 border p-2 text-center">{{ $data['1.7a.h'] }}</td>
+              <td class="w-1/8 border p-2 text-right">{{ $data['1.7a.kn'] }}</td>
+            </tr>
+            @endif
+            @if($data['1.7b.h'] > 0)
+            <tr>
+              <td class="w-3/4 border p-2 pl-6" colspan="2">1.7b Godišnji odmor</td>
+              <td class="w-1/8 border p-2 text-center">{{ $data['1.7b.h'] }}</td>
+              <td class="w-1/8 border p-2 text-right">{{ $data['1.7b.kn'] }}</td>
+            </tr>
+            @endif
+            @if($data['1.7c.h'] > 0)
+            <tr>
+              <td class="w-3/4 border p-2 pl-6" colspan="2">1.7c Plaćeni dopust</td>
+              <td class="w-1/8 border p-2 text-center">{{ $data['1.7c.h'] }}</td>
+              <td class="w-1/8 border p-2 text-right">{{ $data['1.7c.kn'] }}</td>
+            </tr>
+            @endif
+            @if($data['1.7d.h'] > 0)
+            <tr>
+              <td class="w-3/4 border p-2 pl-6" colspan="2">1.7d Bolovanje do 42 dana</td>
+              <td class="w-1/8 border p-2 text-center">{{ $data['1.7d.h'] }}</td>
+              <td class="w-1/8 border p-2 text-right">{{ $data['1.7d.kn'] }}</td>
+            </tr>
+            @endif
+            @if($data['1.7e.h'] > 0)
+            <tr>
+              <td class="w-3/4 border p-2 pl-6" colspan="2">1.7e Dodatak za rad nedjeljom</td>
+              <td class="w-1/8 border p-2 text-center">{{ $data['1.7e.h'] }}</td>
+              <td class="w-1/8 border p-2 text-right">{{ $data['1.7e.kn'] }}</td>
+            </tr>
+            @endif
+            @if($data['1.7f.h'] > 0)
+            <tr>
+              <td class="w-3/4 border p-2 pl-6" colspan="2">1.7f Dodatak za rad na praznik</td>
+              <td class="w-1/8 border p-2 text-center">{{ $data['1.7f.h'] }}</td>
+              <td class="w-1/8 border p-2 text-right">{{ $data['1.7f.kn'] }}</td>
+            </tr>
+            @endif
 
             <tr>
               <td class="w-3/4 border p-2" colspan="2">2. OSTALI OBLICI RADA TEMELJEM KOJIH OSTVARUJE PRAVO NA UVEĆANJE PLAĆE PREMA KOLEKTIVNOM UGOVORU, PRAVILNIKU O RADU ILI UGOVORU O RADU I NOVČANI IZNOS PO TOJ OSNOVI (SATI PRIPRAVNOSTI)</td>

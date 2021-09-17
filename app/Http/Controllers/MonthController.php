@@ -102,7 +102,30 @@ class MonthController extends Controller
     $data['1.4.h'] = number_format($h1_4, 2, ',', '.') . ' (' . number_format($overWork, 2, ',', '.') . ')';
     $data['1.4.kn'] = number_format($h1_4 * $perHour * 1.5, 2, ',', '.');
     
-    
+    // 1.7a Praznici. Blagdani, izbori
+    $data['1.7a.h'] = number_format($hoursNorm->Holiday, 2, ',', '.');
+    $data['1.7a.kn'] = number_format($hoursNorm->Holiday * $perHour, 2, ',', '.');
+
+    // 1.7b Godišnji odmor
+    $data['1.7b.h'] = number_format($hoursNorm->GO, 2, ',', '.');
+    $data['1.7b.kn'] = number_format($hoursNorm->GO * $perHour, 2, ',', '.');
+
+    // 1.7c Plaćeni dopust
+    $data['1.7c.h'] = number_format($hoursNorm->Dopust, 2, ',', '.');
+    $data['1.7c.kn'] = number_format($hoursNorm->Dopust * $perHour, 2, ',', '.');
+
+    // 1.7d Bolovanje do 42 dana
+    $data['1.7d.h'] = number_format($hoursNorm->Sick, 2, ',', '.');
+    $data['1.7d.kn'] = number_format($hoursNorm->Sick * $perHour * 0.7588, 2, ',', '.');
+
+    // 1.7e Dodatak za rad nedjeljom
+    $data['1.7e.h'] = number_format($hoursNorm->minSunday / 60, 2, ',', '.');
+    $data['1.7e.kn'] = number_format($hoursNorm->minSunday / 60 * $perHour * 0.35, 2, ',', '.');
+
+    // 1.7f Dodatak za rad na praznik
+    $data['1.7f.h'] = number_format($hoursNorm->minHoliday / 60, 2, ',', '.');
+    $data['1.7f.kn'] = number_format($hoursNorm->minHoliday / 60 * $perHour * 0.5, 2, ',', '.');
+
     //dd($month,$days);
     return view('months.show')->with(compact('month', 'days', 'data'));
 

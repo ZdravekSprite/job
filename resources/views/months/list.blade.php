@@ -19,6 +19,7 @@
                 Dopust: {{$month->hoursNorm()->Dopust}}
                 Bolovanje: {{$month->hoursNorm()->Sick}}
                 Satnica: {{ $data['perHour'] }}
+                Noćna: {{$month->hoursNorm()->minNight}}
               </th>
               <th class="w-32">
                 <a class="float-right" href="{{ route('months.show', ['month' => $month->next()]) }}" title="{{$month->next()}}">

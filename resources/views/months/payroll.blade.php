@@ -94,6 +94,20 @@
               <td class="w-1/8 border p-2 text-right">{{ $data['1.7f.kn'] }}</td>
             </tr>
             @endif
+            @if($data['1.7g.kn'] > 0)
+            <tr>
+              <td class="w-3/4 border p-2 pl-6" colspan="2">1.7g Dodatak za noćni rad</td>
+              <td class="w-1/8 border p-2 text-center">{{ $data['1.7g.h'] }}</td>
+              <td class="w-1/8 border p-2 text-right">{{ $data['1.7g.kn'] }}</td>
+            </tr>
+            @endif
+            @if($data['1.7p.kn'] > 0)
+            <tr>
+              <td class="w-3/4 border p-2 pl-6" colspan="2">1.7.P Nagrada za radne rezultate</td>
+              <td class="w-1/8 border p-2 text-center"></td>
+              <td class="w-1/8 border p-2 text-right">{{ $data['1.7p.kn'] }}</td>
+            </tr>
+            @endif
 
             <tr>
               <td class="w-3/4 border p-2" colspan="2">2. OSTALI OBLICI RADA TEMELJEM KOJIH OSTVARUJE PRAVO NA UVEĆANJE PLAĆE PREMA KOLEKTIVNOM UGOVORU, PRAVILNIKU O RADU ILI UGOVORU O RADU I NOVČANI IZNOS PO TOJ OSNOVI (SATI PRIPRAVNOSTI)</td>

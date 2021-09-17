@@ -132,6 +132,7 @@ class Month extends Model
     $hoursNormSick = 0;
 
     $minWork = 0;
+    $minWorkNight = 0;
     $minWorkHoli = 0;
     $minWorkSunday = 0;
 
@@ -140,6 +141,10 @@ class Month extends Model
       $day_minWork = ($d->start ? ($d->end ? $d->end->diffInMinutes($d->start) : 24*60 - $d->start->format('H') * 60 + $d->start->format('i')) : 0) + ($d->night ? $d->night->format('H') * 60 + $d->night->format('i') : 0);
       $minWork += $day_minWork;
 
+      $day_minNight1 = $d->night ? $d->night->format('H') * 60 + $d->night->format('i') : 0;
+      $day_endMin = $d->end ? $d->end->format('H') * 60 + $d->end->format('i') : 1440;
+      $day_minNight2 = $d->end && ($day_endMin > 1320) ? $day_endMin - 1320 : 0;
+      $minWorkNight += $day_minNight1 + $day_minNight2;
       $dayOfWeek = $d->date->dayOfWeek;
       switch ($dayOfWeek) {
         case 0:
@@ -183,6 +188,7 @@ class Month extends Model
       'Sick' => $hoursNormSick,
       'Work' => $hoursNormWork,
       'min' => $minWork,
+      'minNight' => $minWorkNight,
       'minSunday' => $minWorkSunday,
       'minHoliday' => $minWorkHoli
     ];

@@ -19,7 +19,7 @@ class MonthController extends Controller
    */
   public function index()
   {
-    $months = Month::orderBy('month','desc')->where('user_id', '=', Auth::user()->id)->get();
+    $months = Month::orderBy('month', 'desc')->where('user_id', '=', Auth::user()->id)->get();
     return view('months.index')->with('months', $months);
   }
 
@@ -33,7 +33,6 @@ class MonthController extends Controller
     $month = new Month;
     //dd($day);
     return view('months.create')->with(compact('month'));
-
   }
 
   /**
@@ -49,7 +48,7 @@ class MonthController extends Controller
       'year' => 'required'
     ]);
     $month = new Month;
-    $month->month = $request->input('month')-1+$request->input('year')*12;
+    $month->month = $request->input('month') - 1 + $request->input('year') * 12;
     $month->user_id = Auth::user()->id;
     $month->bruto = $request->input('bruto') ? $request->input('bruto') * 100 : null;
     $month->prijevoz = $request->input('prijevoz') ? $request->input('prijevoz') * 100 : null;
@@ -83,9 +82,9 @@ class MonthController extends Controller
     $data['III.do'] = $to->format('d');
 
     $hoursNorm = $month->hoursNorm();
-    $bruto = $month->bruto ? $month->bruto : $month->last('bruto');
+    $bruto = $month->bruto ?? $month->last('bruto');
     $month->bruto = $bruto;
-    $perHour = round(($bruto/ 100 / $hoursNorm->All), 2);
+    $perHour = round(($bruto / 100 / $hoursNorm->All), 2);
     $data['perHour'] = $perHour;
     $hoursWorkNorm = $hoursNorm->Work;
     //dd($hoursNorm, $bruto, $perHour);
@@ -101,7 +100,7 @@ class MonthController extends Controller
 
     $data['1.4.h'] = number_format($h1_4, 2, ',', '.') . ' (' . number_format($overWork, 2, ',', '.') . ')';
     $data['1.4.kn'] = number_format($h1_4 * $perHour * 1.5, 2, ',', '.');
-    
+
     // 1.7a Praznici. Blagdani, izbori
     $data['1.7a.h'] = number_format($hoursNorm->Holiday, 2, ',', '.');
     $data['1.7a.kn'] = number_format($hoursNorm->Holiday * $perHour, 2, ',', '.');
@@ -126,9 +125,17 @@ class MonthController extends Controller
     $data['1.7f.h'] = number_format($hoursNorm->minHoliday / 60, 2, ',', '.');
     $data['1.7f.kn'] = number_format($hoursNorm->minHoliday / 60 * $perHour * 0.5, 2, ',', '.');
 
-    //dd($month,$days);
-    return view('months.show')->with(compact('month', 'days', 'data'));
+    // 1.7g Dodatak za noćni rad
+    $nightWork = round($hoursNorm->minNight / 60, 0);
 
+    $data['1.7g.h'] = number_format($nightWork, 2, ',', '.');
+    $data['1.7g.kn'] = number_format($nightWork * $perHour * 0.3, 2, ',', '.');
+
+    // 1.7p Nagrada za radne rezultate
+    $data['1.7p.kn'] = number_format($month->stimulacija, 2, ',', '.');
+
+    //dd($month,$days,$data);
+    return view('months.show')->with(compact('month', 'days', 'data'));
   }
 
   /**
@@ -146,9 +153,12 @@ class MonthController extends Controller
       $unslug = explode(".", $month)[0] - 1 + explode(".", $month)[1] * 12;
       $month = Month::where('user_id', '=', Auth::user()->id)->where('month', '=', $unslug)->first();
     }
+    $month->bruto = $month->bruto ?? $month->last('bruto');
+    $month->prijevoz = $month->prijevoz ?? $month->last('prijevoz');
+    $month->odbitak = $month->odbitak ?? $month->last('odbitak');
+    $month->prirez = $month->prirez ?? $month->last('prirez');
     //dd($month);
     return view('months.edit')->with(compact('month'));
-
   }
 
   /**
@@ -159,7 +169,7 @@ class MonthController extends Controller
    * @return \Illuminate\Http\Response
    */
   //public function update(Request $request, Month $month)
-  public function update(Request $request,$month)
+  public function update(Request $request, $month)
   {
     $this->validate($request, [
       'month' => 'required',
@@ -169,6 +179,9 @@ class MonthController extends Controller
     $month->prijevoz = $request->input('prijevoz') ? $request->input('prijevoz') * 100 : $month->prijevoz;
     $month->odbitak = $request->input('odbitak') ? $request->input('odbitak') * 100 : $month->odnitak;
     $month->prirez = $request->input('prirez') ? $request->input('prirez') * 100 : $month->prirez;
+    $month->prekovremeni = $request->input('prekovremeni') ?? $month->prekovremeni;
+    $month->stimulacija = $request->input('stimulacija') ?? $month->stimulacija;
+    $month->regres = $request->input('regres') ?? $month->regres;
     $month->save();
     return redirect(route('months.show', ['month' => $month->slug()]))->with('success', 'Month Updated');
   }
@@ -186,6 +199,5 @@ class MonthController extends Controller
     $month = Month::where('month', '=', $unslug)->first();
     $month->delete();
     return redirect(route('months.index'))->with('success', 'Month removed');
-
   }
 }

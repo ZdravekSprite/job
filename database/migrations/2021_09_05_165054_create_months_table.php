@@ -22,8 +22,9 @@ class CreateMonthsTable extends Migration
       $table->mediumInteger('odbitak')->nullable();
       $table->smallInteger('prirez')->nullable();
       $table->tinyInteger('prekovremeni')->nullable();
-      $table->mediumInteger('stimulacija')->nullable();
+      $table->mediumInteger('nagrada')->nullable();
       $table->mediumInteger('regres')->nullable();
+      $table->mediumInteger('stimulacija')->nullable();
       $table->timestamps();
       $table->unique(['user_id', 'month']);
       $table->foreign('user_id')->references('id')->on('users');

@@ -132,7 +132,13 @@ class MonthController extends Controller
     $data['1.7g.kn'] = number_format($nightWork * $perHour * 0.3, 2, ',', '.');
 
     // 1.7p Nagrada za radne rezultate
-    $data['1.7p.kn'] = number_format($month->stimulacija, 2, ',', '.');
+    $data['1.7p.kn'] = number_format($month->nagrada/100, 2, ',', '.');
+
+    // 2. OSTALI OBLICI
+    $kn2 = $month->stimulacija/100;
+    $data['2.kn'] = number_format($kn2, 2, ',', '.');
+    // 2.8. Stimulacija bruto
+    $data['2.8.kn'] = number_format($month->stimulacija/100, 2, ',', '.');
 
     //dd($month,$days,$data);
     return view('months.show')->with(compact('month', 'days', 'data'));
@@ -180,8 +186,9 @@ class MonthController extends Controller
     $month->odbitak = $request->input('odbitak') ? $request->input('odbitak') * 100 : $month->odnitak;
     $month->prirez = $request->input('prirez') ? $request->input('prirez') * 100 : $month->prirez;
     $month->prekovremeni = $request->input('prekovremeni') ?? $month->prekovremeni;
-    $month->stimulacija = $request->input('stimulacija') ?? $month->stimulacija;
-    $month->regres = $request->input('regres') ?? $month->regres;
+    $month->nagrada = $request->input('nagrada') ? $request->input('nagrada') * 100 : $month->nagrada;
+    $month->regres = $request->input('regres') ? $request->input('regres') * 100 : $month->regres;
+    $month->stimulacija = $request->input('stimulacija') ? $request->input('stimulacija') * 100 : $month->prirez;
     $month->save();
     return redirect(route('months.show', ['month' => $month->slug()]))->with('success', 'Month Updated');
   }

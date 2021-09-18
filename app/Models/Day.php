@@ -39,4 +39,21 @@ class Day extends Model
   {
     return $this->belongsTo(User::class);
   }
+
+  /**
+   * Dan u tjednu.
+   */
+  public function dan()
+  {
+    $weekMap = [
+      0 => 'Ne',
+      1 => 'Po',
+      2 => 'Ut',
+      3 => 'Sr',
+      4 => 'Če',
+      5 => 'Pe',
+      6 => 'Su',
+    ];
+    return $weekMap[$this->date->dayOfWeek];
+  }
 }

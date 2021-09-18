@@ -55,14 +55,20 @@
 
             <!-- stimulacija -->
             <div class="mt-4">
-              <x-label for="stimulacija" :value="__('Stimulacija')" />
-              <input id="stimulacija" type="number" name="stimulacija" value="{{$month->stimulacija?? old('stimulacija')?? 0}}" min="0" step="100" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+              <x-label for="nagrada" :value="__('Stimulacija')" />
+              <input id="nagrada" type="number" name="nagrada" value="{{$month->nagrada? $month->nagrada/100 : old('nagrada')?? 0}}" min="0" step="100" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
             </div>
 
             <!-- regres -->
             <div class="mt-4">
               <x-label for="regres" :value="__('Regres')" />
-              <input id="regres" type="number" name="regres" value="{{$month->regres?? old('regres')?? 0}}" min="0" step="100" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+              <input id="regres" type="number" name="regres" value="{{$month->regres? $month->regres/100 : old('regres')?? 0}}" min="0" step="100" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+            </div>
+
+            <!-- stimulacija Bruto-->
+            <div class="mt-4">
+              <x-label for="stimulacija" :value="__('Stimulacija Bruto')" />
+              <input id="stimulacija" type="number" name="stimulacija" value="{{$month->stimulacija ? $month->stimulacija/100 : old('stimulacija')?? 0}}" min="0" step="0.01" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
             </div>
 
 

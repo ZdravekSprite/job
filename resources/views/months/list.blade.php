@@ -5,7 +5,7 @@
         <table class="table-auto w-full">
           <thead>
             <tr>
-              <th class="w-24">
+              <th class="w-32">
                 <a href="{{ route('months.show', ['month' => $month->prev()]) }}" title="{{$month->prev()}}">
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-arrow-left-square" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm11.5 5.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
@@ -34,7 +34,7 @@
             @if(count($days) > 0)
             @foreach($days as $day)
             <tr>
-              <td><a {{isset($day->holiday) ? 'class=text-red-400 ' : ''}}href="{{ route('day.show', ['date' => $day->date->format('d.m.Y')]) }}" title="{{$day->date->format('d.m.Y')}}{{isset($day->holiday) ? ' '.$day->holiday : ''}}">{{$day->date->format('d.m.Y')}}</a></td>
+              <td><a {{isset($day->holiday) ? 'class=text-red-400 ' : ''}}href="{{ route('day.show', ['date' => $day->date->format('d.m.Y')]) }}" title="{{$day->date->format('d.m.Y')}}{{isset($day->holiday) ? ' '.$day->holiday : ''}}">{{$day->date->format('d.m.Y')}} {{$day->dan()}}</a></td>
               <td>
                 <div class="w-full rounded-md relative {{$day->state == 4 ? 'bg-red' : ($day->state == 3 ? 'bg-gray' : ($day->state == 2 ? 'bg-green' : ($day->state == 1 ? 'bg-indigo' : 'bg-yellow')))}}-{{$day->date->format('D') == 'Sun' ? '300' : '100'}}" style="min-height: 18px;" title="{{$day->date->format('d.m.Y')}}{{$day->state == 1 ? ' ' .$day->start->format('H.i').' '.$day->end->format('H.i') : ''}}">
                   @if($day->state == 1)

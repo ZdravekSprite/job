@@ -17,6 +17,10 @@
             {{$month->prijevoz ? number_format($month->prijevoz/100, 2, ',', ' ') : number_format($month->last('prijevoz')/100, 2, ',', ' ')}}
             {{$month->odbitak ? number_format($month->odbitak/100, 2, ',', ' ') : number_format($month->last('odbitak')/100, 2, ',', ' ')}}
             {{$month->prirez ? number_format($month->prirez/100, 2, ',', ' ') : number_format($month->last('prirez')/100, 2, ',', ' ')}}
+            {{$month->prekovremeni ?? 0}}
+            {{$month->nagrada ? number_format($month->nagrada/100, 2, ',', ' ') : 0}}
+            {{$month->regres ? number_format($month->regres/100, 2, ',', ' ') : 0}}
+            {{$month->stimulacija ? number_format($month->stimulacija/100, 2, ',', ' ') : 0}}
 
             <a class="float-left" href="{{ route('months.edit', ['month' => $month->slug()]) }}" title="Izmjeni">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">

@@ -371,6 +371,6 @@ use Illuminate\Support\Facades\Auth;
 ```
 ```bash
 git add .
-git commit -am "Month Payrol 1.7p"
+git commit -am "Month Payrol 2"
 git push
 ```

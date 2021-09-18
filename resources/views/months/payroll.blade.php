@@ -112,8 +112,19 @@
             <tr>
               <td class="w-3/4 border p-2" colspan="2">2. OSTALI OBLICI RADA TEMELJEM KOJIH OSTVARUJE PRAVO NA UVEĆANJE PLAĆE PREMA KOLEKTIVNOM UGOVORU, PRAVILNIKU O RADU ILI UGOVORU O RADU I NOVČANI IZNOS PO TOJ OSNOVI (SATI PRIPRAVNOSTI)</td>
               <td class="w-1/8 border p-2 text-center"></td>
-              <td class="w-1/8 border p-2 text-right"></td>
+              <td class="w-1/8 border p-2 text-right">
+              @if($data['2.8.kn'] > 0)
+              {{ $data['2.kn'] }}
+              @endif
+              </td>
             </tr>
+            @if($data['2.8.kn'] > 0)
+            <tr>
+              <td class="w-3/4 border p-2 pl-6" colspan="2">2.8. Stimulacija bruto</td>
+              <td class="w-1/8 border p-2 text-center"></td>
+              <td class="w-1/8 border p-2 text-right">{{ $data['2.8.kn'] }}</td>
+            </tr>
+            @endif
 
           </tbody>
         </table>

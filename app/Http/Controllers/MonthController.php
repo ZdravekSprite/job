@@ -87,6 +87,8 @@ class MonthController extends Controller
     $perHour = round(($bruto / 100 / $hoursNorm->All), 2);
     $data['perHour'] = $perHour;
     $hoursWorkNorm = $hoursNorm->Work;
+    $prijevoz = $month->prijevoz ?? $month->last('prijevoz');
+    $month->prijevoz = $prijevoz;
     //dd($hoursNorm, $bruto, $perHour);
 
     // 1.1. Za redoviti rad
@@ -169,6 +171,10 @@ class MonthController extends Controller
     // 4. ZBROJENI IZNOSI PRIMITAKA PO SVIM OSNOVAMA PO STAVKAMA 1. DO 3.
     $kn4 = $kn1 + $kn2 + $kn3;
     $data['4.kn'] = number_format($kn4, 2, ',', '.');;
+
+    // 5. OSNOVICA ZA OBRAČUN DOPRINOSA
+    $kn5 = $kn1 - $kn1_7p + $kn2;
+    $data['5.kn'] = number_format($kn5, 2, ',', '.');;
 
     //dd($month,$days,$data);
     return view('months.show')->with(compact('month', 'days', 'data'));

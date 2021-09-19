@@ -166,6 +166,11 @@
               <td class="w-1/8 border p-2 text-right">{{ $data['4.kn'] }}</td>
             </tr>
 
+            <tr>
+              <td class="w-3/4 border p-2" colspan="2"><b>5. OSNOVICA ZA OBRAČUN DOPRINOSA</b></td>
+              <td class="w-1/8 border p-2 text-center"></td>
+              <td class="w-1/8 border p-2 text-right"><b>{{ $data['5.kn'] }}<b></td>
+            </tr>
           </tbody>
         </table>
       </div>

@@ -91,6 +91,8 @@ class MonthController extends Controller
     $month->prijevoz = $prijevoz;
     $odbitak = $month->odbitak ?? $month->last('odbitak');
     $month->odbitak = $odbitak;
+    $prirez = $month->prirez ?? $month->last('prirez');
+    $month->prirez = $prirez;
     //dd($hoursNorm, $bruto, $perHour);
 
     // 1.1. Za redoviti rad
@@ -196,6 +198,16 @@ class MonthController extends Controller
     // 9. POREZNA OSNOVICA
     $kn9 = $kn7 - $kn8;
     $data['9.kn'] = number_format($kn9, 2, ',', '.');
+    
+    // 10. IZNOS PREDUJMA POREZA I PRIREZA POREZU NA DOHODAK
+    $kn10_20 = round($kn9 * 0.2, 2);
+    $kn10_prirez = round($kn10_20 * $prirez / 10000, 2);
+    $kn10 = $kn10_20 + $kn10_prirez;
+    $data['10.kn'] = number_format($kn10, 2, ',', '.');
+    // 20.00%
+    $data['10.20.kn'] = number_format($kn10_20, 2, ',', '.');
+    // Prirez
+    $data['10.prirez.kn'] = number_format($kn10_prirez, 2, ',', '.');
     
     //dd($month,$days,$data);
     return view('months.show')->with(compact('month', 'days', 'data'));

@@ -122,7 +122,25 @@
             <tr>
               <td class="w-3/4 border p-2 pl-6" colspan="2">2.8. Stimulacija bruto</td>
               <td class="w-1/8 border p-2 text-center"></td>
-              <td class="w-1/8 border p-2 text-right">{{ $data['2.8.kn'] }}</td>
+              <td class="w-1/8 border p-2 text-right">{{ $data['2.8.kn'] }} ({{ $data['extra'] }})</td>
+            </tr>
+            @endif
+
+            <tr>
+              <td class="w-3/4 border p-2" colspan="2">3. PROPISANI ILI UGOVORENI DODACI NA PLAĆU RADNIKA I NOVČANI IZNOSI PO TOJ OSNOVI</td>
+              <td class="w-1/8 border p-2 text-center"></td>
+              <td class="w-1/8 border p-2 text-right">{{ $data['3.kn'] }}</td>
+            </tr>
+            <tr>
+              <td class="w-3/4 border p-2 pl-6" colspan="2">3.1. Prijevoz</td>
+              <td class="w-1/8 border p-2 text-center"></td>
+              <td class="w-1/8 border p-2 text-right">{{ $data['3.1.kn'] }}</td>
+            </tr>
+            @if($data['3.7.kn'] > 0)
+            <tr>
+              <td class="w-3/4 border p-2 pl-6" colspan="2">3.7. Regres za godišnji odmor</td>
+              <td class="w-1/8 border p-2 text-center"></td>
+              <td class="w-1/8 border p-2 text-right">{{ $data['3.7.kn'] }}</td>
             </tr>
             @endif
 

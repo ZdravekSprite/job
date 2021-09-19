@@ -132,13 +132,27 @@ class MonthController extends Controller
     $data['1.7g.kn'] = number_format($nightWork * $perHour * 0.3, 2, ',', '.');
 
     // 1.7p Nagrada za radne rezultate
-    $data['1.7p.kn'] = number_format($month->nagrada/100, 2, ',', '.');
+    $data['1.7p.kn'] = number_format($month->nagrada / 100, 2, ',', '.');
 
     // 2. OSTALI OBLICI
-    $kn2 = $month->stimulacija/100;
+    $kn2 = $month->stimulacija / 100;
     $data['2.kn'] = number_format($kn2, 2, ',', '.');
     // 2.8. Stimulacija bruto
-    $data['2.8.kn'] = number_format($month->stimulacija/100, 2, ',', '.');
+    $data['2.8.kn'] = number_format($month->stimulacija / 100, 2, ',', '.');
+    $extra_prekovremeni = $month->stimulacija / 100 / $perHour / 1.5;
+    $data['2.8.kn'] = number_format($month->stimulacija / 100, 2, ',', '.');
+    $data['extra'] = floor($extra_prekovremeni) . 'h ' . (floor($extra_prekovremeni * 60) % 60) . 'm ' . floor($extra_prekovremeni * 3600) % 60 . 's';
+
+    // 3. PROPISANI ILI UGOVORENI DODACI NA PLAĆU RADNIKA I NOVČANI IZNOSI PO TOJ OSNOVI
+    $prijevoz = $month->prijevoz / 100 ?? 360;
+    $prijevoz = $hoursNorm->GO ? $prijevoz * ($hoursNorm->All - $hoursNorm->GO) / $hoursNorm->All : $prijevoz;
+    $regres = $month->regres / 100 ?? 0;
+    $kn3 = $prijevoz + $regres;
+    $data['3.kn'] = number_format($kn3, 2, ',', '.');
+    // 3.1. Prijevoz
+    $data['3.1.kn'] = number_format($prijevoz, 2, ',', '.');
+    // 3.7. Regres za godišnji odmor
+    $data['3.7.kn'] = number_format($regres, 2, ',', '.');
 
     //dd($month,$days,$data);
     return view('months.show')->with(compact('month', 'days', 'data'));
@@ -188,7 +202,7 @@ class MonthController extends Controller
     $month->prekovremeni = $request->input('prekovremeni') ?? $month->prekovremeni;
     $month->nagrada = $request->input('nagrada') ? $request->input('nagrada') * 100 : $month->nagrada;
     $month->regres = $request->input('regres') ? $request->input('regres') * 100 : $month->regres;
-    $month->stimulacija = $request->input('stimulacija') ? $request->input('stimulacija') * 100 : $month->prirez;
+    $month->stimulacija = $request->input('stimulacija') ? $request->input('stimulacija') * 100 : $month->stimulacija;
     $month->save();
     return redirect(route('months.show', ['month' => $month->slug()]))->with('success', 'Month Updated');
   }

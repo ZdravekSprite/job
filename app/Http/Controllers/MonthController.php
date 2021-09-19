@@ -92,50 +92,62 @@ class MonthController extends Controller
     // 1.1. Za redoviti rad
     $h1_1 = $hoursNorm->min / 60 > $hoursWorkNorm ? $hoursWorkNorm : $hoursNorm->min / 60;
     $data['1.1.h'] = number_format($h1_1, 2, ',', '.');
-    $data['1.1.kn'] = number_format($h1_1 * $perHour, 2, ',', '.');
+    $kn1_1 = round($h1_1 * $perHour,2);
+    $data['1.1.kn'] = number_format($kn1_1, 2, ',', '.');
 
     // 1.4 Za prekovremeni rad
     $h1_4 = $month->prekovremeni;
     $overWork = $hoursNorm->min / 60 - $hoursWorkNorm;
 
     $data['1.4.h'] = number_format($h1_4, 2, ',', '.') . ' (' . number_format($overWork, 2, ',', '.') . ')';
-    $data['1.4.kn'] = number_format($h1_4 * $perHour * 1.5, 2, ',', '.');
+    $kn1_4 = round($h1_4 * $perHour * 1.5,2);
+    $data['1.4.kn'] = number_format($kn1_4, 2, ',', '.');
 
     // 1.7a Praznici. Blagdani, izbori
     $data['1.7a.h'] = number_format($hoursNorm->Holiday, 2, ',', '.');
-    $data['1.7a.kn'] = number_format($hoursNorm->Holiday * $perHour, 2, ',', '.');
+    $kn1_7a = round($hoursNorm->Holiday * $perHour,2);
+    $data['1.7a.kn'] = number_format($kn1_7a, 2, ',', '.');
 
     // 1.7b Godišnji odmor
     $data['1.7b.h'] = number_format($hoursNorm->GO, 2, ',', '.');
-    $data['1.7b.kn'] = number_format($hoursNorm->GO * $perHour, 2, ',', '.');
+    $kn1_7b = round($hoursNorm->GO * $perHour,2);
+    $data['1.7b.kn'] = number_format($kn1_7b, 2, ',', '.');
 
     // 1.7c Plaćeni dopust
     $data['1.7c.h'] = number_format($hoursNorm->Dopust, 2, ',', '.');
-    $data['1.7c.kn'] = number_format($hoursNorm->Dopust * $perHour, 2, ',', '.');
+    $kn1_7c = round($hoursNorm->Dopust * $perHour,2);
+    $data['1.7c.kn'] = number_format($kn1_7c, 2, ',', '.');
 
     // 1.7d Bolovanje do 42 dana
     $data['1.7d.h'] = number_format($hoursNorm->Sick, 2, ',', '.');
-    $data['1.7d.kn'] = number_format($hoursNorm->Sick * $perHour * 0.7588, 2, ',', '.');
+    $kn1_7d = round($hoursNorm->Sick * $perHour * 0.7588,2);
+    $data['1.7d.kn'] = number_format($kn1_7d, 2, ',', '.');
 
     // 1.7e Dodatak za rad nedjeljom
     $data['1.7e.h'] = number_format($hoursNorm->minSunday / 60, 2, ',', '.');
-    $data['1.7e.kn'] = number_format($hoursNorm->minSunday / 60 * $perHour * 0.35, 2, ',', '.');
+    $kn1_7e = round($hoursNorm->minSunday / 60 * $perHour * 0.35,2);
+    $data['1.7e.kn'] = number_format($kn1_7e, 2, ',', '.');
 
     // 1.7f Dodatak za rad na praznik
     $data['1.7f.h'] = number_format($hoursNorm->minHoliday / 60, 2, ',', '.');
-    $data['1.7f.kn'] = number_format($hoursNorm->minHoliday / 60 * $perHour * 0.5, 2, ',', '.');
+    $kn1_7f = round($hoursNorm->minHoliday / 60 * $perHour * 0.5,2);
+    $data['1.7f.kn'] = number_format($kn1_7f, 2, ',', '.');
 
     // 1.7g Dodatak za noćni rad
     $nightWork = round($hoursNorm->minNight / 60, 0);
 
     $data['1.7g.h'] = number_format($nightWork, 2, ',', '.');
-    $data['1.7g.kn'] = number_format($nightWork * $perHour * 0.3, 2, ',', '.');
+    $kn1_7g = round($nightWork * $perHour * 0.3,2);
+    $data['1.7g.kn'] = number_format($kn1_7g, 2, ',', '.');
 
     // 1.7p Nagrada za radne rezultate
-    $data['1.7p.kn'] = number_format($month->nagrada / 100, 2, ',', '.');
+    $kn1_7p = round($month->nagrada/100,2);
+    $data['1.7p.kn'] = number_format($kn1_7p, 2, ',', '.');
+
+    $kn1 = $kn1_1 + $kn1_4 + $kn1_7a + $kn1_7b + $kn1_7c + $kn1_7d + $kn1_7e + $kn1_7f + $kn1_7g + $kn1_7p;
 
     // 2. OSTALI OBLICI
-    $kn2 = $month->stimulacija / 100;
+    $kn2 = round($month->stimulacija / 100,2);
     $data['2.kn'] = number_format($kn2, 2, ',', '.');
     // 2.8. Stimulacija bruto
     $data['2.8.kn'] = number_format($month->stimulacija / 100, 2, ',', '.');
@@ -147,12 +159,16 @@ class MonthController extends Controller
     $prijevoz = $month->prijevoz / 100 ?? 360;
     $prijevoz = $hoursNorm->GO ? $prijevoz * ($hoursNorm->All - $hoursNorm->GO) / $hoursNorm->All : $prijevoz;
     $regres = $month->regres / 100 ?? 0;
-    $kn3 = $prijevoz + $regres;
+    $kn3 = round($prijevoz + $regres,2);
     $data['3.kn'] = number_format($kn3, 2, ',', '.');
     // 3.1. Prijevoz
     $data['3.1.kn'] = number_format($prijevoz, 2, ',', '.');
     // 3.7. Regres za godišnji odmor
     $data['3.7.kn'] = number_format($regres, 2, ',', '.');
+
+    // 4. ZBROJENI IZNOSI PRIMITAKA PO SVIM OSNOVAMA PO STAVKAMA 1. DO 3.
+    $kn4 = $kn1 + $kn2 + $kn3;
+    $data['4.kn'] = number_format($kn4, 2, ',', '.');;
 
     //dd($month,$days,$data);
     return view('months.show')->with(compact('month', 'days', 'data'));

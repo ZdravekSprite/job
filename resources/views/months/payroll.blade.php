@@ -220,6 +220,23 @@
               <td class="w-1/8 border p-2 text-right">{{ $data['10.prirez.kn'] }}</td>
             </tr>
 
+              <tr>
+                <td class="w-3/4 border p-2" colspan="2"><b>11. NETO PLAĆA</b></td>
+                <td class="w-1/8 border p-2 text-center"></td>
+                <td class="w-1/8 border p-2 text-right"><b>{{ $data['11.kn'] }}</b></td>
+              </tr>
+
+              <tr>
+                <td class="w-3/4 border p-2" colspan="2">12. NAKNADE UKUPNO</td>
+                <td class="w-1/8 border p-2 text-center"></td>
+                <td class="w-1/8 border p-2 text-right">{{ $data['12.kn'] }}</td>
+              </tr>
+
+              <tr>
+                <td class="w-3/4 border p-2" colspan="2"><b>13. NETO + NAKNADE</b></td>
+                <td class="w-1/8 border p-2 text-center"></td>
+                <td class="w-1/8 border p-2 text-right"><b>{{ $data['13.kn'] }}</b></td>
+              </tr>
           </tbody>
         </table>
       </div>

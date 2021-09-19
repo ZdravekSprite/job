@@ -209,6 +209,15 @@ class MonthController extends Controller
     // Prirez
     $data['10.prirez.kn'] = number_format($kn10_prirez, 2, ',', '.');
     
+    // 11. NETO PLAĆA
+    $data['11.kn'] = number_format($kn7 - $kn10, 2, ',', '.');
+
+    // 12. NAKNADE UKUPNO
+    $data['12.kn'] = number_format($kn3 + $kn1_7p, 2, ',', '.');
+
+    // 13. NETO + NAKNADE
+    $data['13.kn'] = number_format($kn7 - $kn10 + $kn3 + $kn1_7p, 2, ',', '.');
+
     //dd($month,$days,$data);
     return view('months.show')->with(compact('month', 'days', 'data'));
   }

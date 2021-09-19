@@ -89,6 +89,8 @@ class MonthController extends Controller
     $hoursWorkNorm = $hoursNorm->Work;
     $prijevoz = $month->prijevoz ?? $month->last('prijevoz');
     $month->prijevoz = $prijevoz;
+    $odbitak = $month->odbitak ?? $month->last('odbitak');
+    $month->odbitak = $odbitak;
     //dd($hoursNorm, $bruto, $perHour);
 
     // 1.1. Za redoviti rad
@@ -183,6 +185,18 @@ class MonthController extends Controller
     $kn6_2 = round($kn5 * 0.05, 2);
     $data['6.2.kn'] = number_format($kn6_2, 2, ',', '.');
 
+    // 7. DOHODAK
+    $kn7 = $kn5 - $kn6_1 - $kn6_2;
+    $data['7.kn'] = number_format($kn7, 2, ',', '.');
+
+    // 8. OSOBNI ODBITAK 1.00 / 4000.00
+    $kn8 = $kn7 * 100 > $odbitak ? $odbitak / 100 : $kn7;
+    $data['8.kn'] = number_format($kn8, 2, ',', '.');
+
+    // 9. POREZNA OSNOVICA
+    $kn9 = $kn7 - $kn8;
+    $data['9.kn'] = number_format($kn9, 2, ',', '.');
+    
     //dd($month,$days,$data);
     return view('months.show')->with(compact('month', 'days', 'data'));
   }

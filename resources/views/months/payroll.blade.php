@@ -188,6 +188,22 @@
               <td class="w-1/8 border p-2 text-right">{{ $data['6.2.kn'] }}</td>
             </tr>
 
+            <tr>
+              <td class="w-3/4 border p-2" colspan="2"><b>7. DOHODAK</b></td>
+              <td class="w-1/8 border p-2 text-center"></td>
+              <td class="w-1/8 border p-2 text-right"><b>{{ $data['7.kn'] }}</b></td>
+            </tr>
+            <tr>
+              <td class="w-3/4 border p-2" colspan="2">8. OSOBNI ODBITAK 1.00 / {{ number_format($month->odbitak/100, 2, '.', '') }}</td>
+              <td class="w-1/8 border p-2 text-center"></td>
+              <td class="w-1/8 border p-2 text-right">{{ $data['8.kn'] }}</td>
+            </tr>
+            <tr>
+              <td class="w-3/4 border p-2" colspan="2">9. POREZNA OSNOVICA</td>
+              <td class="w-1/8 border p-2 text-center"></td>
+              <td class="w-1/8 border p-2 text-right">{{ $data['9.kn'] }}</td>
+            </tr>
+
           </tbody>
         </table>
       </div>

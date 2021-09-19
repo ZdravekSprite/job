@@ -176,6 +176,13 @@ class MonthController extends Controller
     $kn5 = $kn1 - $kn1_7p + $kn2;
     $data['5.kn'] = number_format($kn5, 2, ',', '.');;
 
+    // 6.1. za mirovinsko osiguranje na temelju generacijske solidarnosti (I. STUP)
+    $kn6_1 = round($kn5 * 0.15, 2);
+    $data['6.1.kn'] = number_format($kn6_1, 2, ',', '.');
+    // 6.2 za mirovinsko osiguranje na temelju individualne kapitalizirane štednje (II. STUP)
+    $kn6_2 = round($kn5 * 0.05, 2);
+    $data['6.2.kn'] = number_format($kn6_2, 2, ',', '.');
+
     //dd($month,$days,$data);
     return view('months.show')->with(compact('month', 'days', 'data'));
   }

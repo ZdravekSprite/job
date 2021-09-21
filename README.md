@@ -449,6 +449,6 @@ php artisan migrate
 ```
 ```bash
 git add .
-git commit -am "Settings 03"
+git commit -am "Settings 04"
 git push
 ```

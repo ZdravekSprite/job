@@ -76,6 +76,15 @@ class MonthController extends Controller
     $unslug = $data['III.mjesec'] - 1 + $data['III.godina'] * 12;
     $month = Month::where('user_id', '=', Auth::user()->id)->where('month', '=', $unslug)->first();
     $settings = Settings::where('user_id', '=', Auth::user()->id)->first();
+    if(!$settings) {
+      $settings = new Settings();
+      $settings->start1 = '06:00';
+      $settings->end1 = '14:00';
+      $settings->start2 = '14:00';
+      $settings->end2 = '22:00';
+      $settings->start3 = '22:00';
+      $settings->end3 = '06:00';
+      }
     $days = $month->days();
 
     $from = $month->from();

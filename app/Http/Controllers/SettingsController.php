@@ -84,8 +84,8 @@ class SettingsController extends Controller
     $settings->end1 = $request->input('end1') ?? $settings->end1;
     $settings->start2 = $request->input('start2') ?? $settings->start2;
     $settings->end2 = $request->input('end2') ?? $settings->end2;
-    $settings->start3 = $request->input('start3') ?? $settings->start2;
-    $settings->end3 = $request->input('end3') ?? $settings->end2;
+    $settings->start3 = $request->input('start3') ?? $settings->start3;
+    $settings->end3 = $request->input('end3') ?? $settings->end3;
     //dd($day);
     $settings->save();
     return redirect(route('dashboard'))->with('success', 'Settings Updated');

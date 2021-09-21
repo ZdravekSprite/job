@@ -16,12 +16,12 @@ class CreateSettingsTable extends Migration
     Schema::create('settings', function (Blueprint $table) {
       $table->id();
       $table->unsignedBigInteger('user_id');
-      $table->time('1start')->default('00:00:00');
-      $table->time('1end')->default('00:00:00');
-      $table->time('2start')->default('00:00:00');
-      $table->time('2end')->default('00:00:00');
-      $table->time('3start')->default('00:00:00');
-      $table->time('3end')->default('00:00:00');
+      $table->time('start1')->default('00:00:00');
+      $table->time('end1')->default('00:00:00');
+      $table->time('start2')->default('00:00:00');
+      $table->time('end2')->default('00:00:00');
+      $table->time('start3')->default('00:00:00');
+      $table->time('end3')->default('00:00:00');
       $table->timestamps();
       $table->unique('user_id');
       $table->foreign('user_id')->references('id')->on('users');

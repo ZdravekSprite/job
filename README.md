@@ -431,12 +431,12 @@ php artisan migrate
    * @var array
    */
   protected $casts = [
-    '1start' => 'datetime:H:i',
-    '1end' => 'datetime:H:i',
-    '2start' => 'datetime:H:i',
-    '2end' => 'datetime:H:i',
-    '3start' => 'datetime:H:i',
-    '3end' => 'datetime:H:i',
+    'start1' => 'datetime:H:i',
+    'end1' => 'datetime:H:i',
+    'start2' => 'datetime:H:i',
+    'end2' => 'datetime:H:i',
+    'start3' => 'datetime:H:i',
+    'end3' => 'datetime:H:i',
   ];
 
   /**
@@ -449,5 +449,6 @@ php artisan migrate
 ```
 ```bash
 git add .
-git commit -am "Settings 01"
+git commit -am "Settings 02"
+git push
 ```

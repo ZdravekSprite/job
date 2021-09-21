@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DayController;
 use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\MonthController;
+use App\Http\Controllers\SettingsController;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Settings;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +24,8 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/dashboard', function () {
-  return view('dashboard');
+  $settings = Settings::where('user_id', '=', Auth::user()->id)->first();
+  return view('dashboard')->with(compact('settings'));
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__ . '/auth.php';
@@ -37,3 +41,5 @@ Route::delete('/day/{date}', [DayController::class, 'destroy'])->name('day.destr
 
 Route::resource('holidays', HolidayController::class);
 Route::resource('months', MonthController::class)->middleware(['auth']);
+//Route::resource('settings', SettingsController::class)->middleware(['auth']);
+Route::post('/settings', [SettingsController::class, 'update'])->name('settings.update');

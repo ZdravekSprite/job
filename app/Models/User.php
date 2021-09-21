@@ -56,4 +56,11 @@ class User extends Authenticatable
   {
     return $this->hasMany(Month::class);
   }
+  /**
+   * Get the users settings.
+   */
+  public function settings()
+  {
+    return $this->hasOne(Settings::class);
+  }
 }

@@ -374,3 +374,80 @@ git add .
 git commit -am "Month Payrol 13"
 git push
 ```
+## Pref model (+ factory + migration + seeder + controller)
+```bash
+php artisan make:model Settings -a
+```
+### database\migrations\2021_09_21_093851_create_settings_table.php
+```php
+  public function up()
+  {
+    Schema::create('settings', function (Blueprint $table) {
+      $table->id();
+      $table->unsignedBigInteger('user_id');
+      $table->time('1start')->default('00:00:00');
+      $table->time('1end')->default('00:00:00');
+      $table->time('2start')->default('00:00:00');
+      $table->time('2end')->default('00:00:00');
+      $table->time('3start')->default('00:00:00');
+      $table->time('3end')->default('00:00:00');
+      $table->timestamps();
+      $table->unique('user_id');
+      $table->foreign('user_id')->references('id')->on('users');
+    });
+  }
+```
+```bash
+php artisan migrate
+```
+## Eloquent: Relationships
+
+### app\Models\User.php
+```php
+  /**
+   * Get the users settings.
+   */
+  public function settings()
+  {
+    return $this->hasOne(Settings::class);
+  }
+```
+### app\Models\Settings.php
+```php
+  /**
+   * The attributes that should be hidden for arrays.
+   *
+   * @var array
+   */
+  protected $hidden = [
+    'id',
+    'created_at',
+    'updated_at',
+  ];
+
+  /**
+   * The attributes that should be cast to native types.
+   *
+   * @var array
+   */
+  protected $casts = [
+    '1start' => 'datetime:H:i',
+    '1end' => 'datetime:H:i',
+    '2start' => 'datetime:H:i',
+    '2end' => 'datetime:H:i',
+    '3start' => 'datetime:H:i',
+    '3end' => 'datetime:H:i',
+  ];
+
+  /**
+   * Get the user that owns the settings.
+   */
+  public function user()
+  {
+    return $this->belongsTo(User::class);
+  }
+```
+```bash
+git add .
+git commit -am "Settings 01"
+```

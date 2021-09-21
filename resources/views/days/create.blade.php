@@ -58,14 +58,14 @@
             <div class="mt-4{{$day->state == 1 ? '' : ' hidden'}}" id="start_div">
               <x-label for="start" :value="__('Početak smjene')" />
               <input id="start" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" type="time" name="start" value="{{$day->start ? $day->start->format('H:i') : old('start')?? '00:00'}}" required />
-              <p>Vrijeme kada započinje smjena. Za default vrijednost sam uzeo 06:00, mada uglavnom radim popodne ali kak bi se reklo prva smjena je prva :)</p>
+              <p>Vrijeme kada započinje smjena.</p>
             </div>
 
             <!-- end -->
             <div class="mt-4{{$day->state == 1 ? '' : ' hidden'}}" id="end_div">
               <x-label for="end" :value="__('Kraj smjene')" />
               <input id="end" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" type="time" name="end" value="{{$day->end ? $day->end->format('H:i') : old('end')?? '00:00'}}" required />
-              <p>Kada je smjena završila. Za nočnu nisam još narihtao da računa da smjena završava drugi dan pa vjerojatno računica neće valjati.</p>
+              <p>Kada je smjena završila.</p>
             </div>
 
             <div class="flex items-center justify-end mt-4">

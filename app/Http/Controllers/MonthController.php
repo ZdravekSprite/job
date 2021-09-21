@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Month;
+use App\Models\Settings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -74,6 +75,7 @@ class MonthController extends Controller
     $data['III.mjesec'] = explode(".", $month)[0];
     $unslug = $data['III.mjesec'] - 1 + $data['III.godina'] * 12;
     $month = Month::where('user_id', '=', Auth::user()->id)->where('month', '=', $unslug)->first();
+    $settings = Settings::where('user_id', '=', Auth::user()->id)->first();
     $days = $month->days();
 
     $from = $month->from();
@@ -219,7 +221,7 @@ class MonthController extends Controller
     $data['13.kn'] = number_format($kn7 - $kn10 + $kn3 + $kn1_7p, 2, ',', '.');
 
     //dd($month,$days,$data);
-    return view('months.show')->with(compact('month', 'days', 'data'));
+    return view('months.show')->with(compact('month', 'days', 'data', 'settings'));
   }
 
   /**

@@ -24,6 +24,22 @@
               <input id="end1" type="time" name="end1" value="{{ $settings ? $settings->end1->format('H:i') : old('end1')?? '14:00'}}" required class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
               <p>Vrijeme kada završava 1. smjena.</p>
             </div>
+            <div class="mt-4">
+              <x-label for="start2" :value="__('Početak 2. smjene')" />
+              <input id="start2" type="time" name="start2" value="{{ $settings ? $settings->start2->format('H:i') : old('start2')?? '14:00'}}" required class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+              <p>Vrijeme kada započinje 2. smjena.</p>
+              <x-label for="end2" :value="__('Kraj 2. smjene')" />
+              <input id="end2" type="time" name="end2" value="{{ $settings ? $settings->end2->format('H:i') : old('end2')?? '22:00'}}" required class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+              <p>Vrijeme kada završava 2. smjena.</p>
+            </div>
+            <div class="mt-4">
+              <x-label for="start3" :value="__('Početak 3. smjene')" />
+              <input id="start3" type="time" name="start3" value="{{ $settings ? $settings->start3->format('H:i') : old('start3')?? '22:00'}}" required class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+              <p>Vrijeme kada započinje 3. smjena.</p>
+              <x-label for="end2" :value="__('Kraj 3. smjene')" />
+              <input id="end3" type="time" name="end3" value="{{ $settings ? $settings->end3->format('H:i') : old('end3')?? '06:00'}}" required class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+              <p>Vrijeme kada završava 3. smjena.</p>
+            </div>
             <div class="flex items-center justify-end mt-4">
               <x-button class="ml-4">
                 {{ __('Spremi') }}
